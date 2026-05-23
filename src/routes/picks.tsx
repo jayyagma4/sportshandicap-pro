@@ -250,29 +250,38 @@ function PageBtn({
 }
 
 function PickCard({ pick }: { pick: Pick }) {
+  const accent = sportColors[pick.sport];
+  // split "May 09, 2026 @ 4:05 PM ET" → date / time
+  const [dateStr, timeStr] = pick.date.split(" @ ");
+  const venueShort = pick.venue.split(",").slice(0, 2).join(",");
+
   return (
-    <div className="card-premium p-6 flex flex-col h-full">
-      {/* Top row */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className={`h-9 w-9 rounded-full bg-gradient-to-br ${sportColors[pick.sport]} flex items-center justify-center text-[10px] font-extrabold text-white shadow-lg`}>
-            {pick.sport.slice(0, 3)}
+    <div className="card-premium relative overflow-hidden flex flex-col h-full group">
+      {/* Sport accent strip */}
+      <div className={`h-1 w-full bg-gradient-to-r ${accent}`} />
+      {/* Ambient glow */}
+      <div className={`absolute -top-24 -right-24 h-48 w-48 rounded-full bg-gradient-to-br ${accent} opacity-20 blur-3xl pointer-events-none`} />
+
+      <div className="p-6 flex flex-col flex-1 relative">
+        {/* Header: sport chip + stars */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10">
+              <div className={`h-5 w-5 rounded-full bg-gradient-to-br ${accent} flex items-center justify-center text-[8px] font-extrabold text-white`}>
+                {pick.sport.charAt(0)}
+              </div>
+              <span className="text-xs font-bold text-white">{pick.sport}</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-300 pl-1.5 ml-0.5 border-l border-white/10">
+                Graded
+              </span>
+            </div>
           </div>
-          <div>
-            <div className="text-sm font-bold text-white">{pick.sport}</div>
-            <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded-md bg-white/5 border border-white/10 text-slate-300">
-              Graded
-            </span>
-          </div>
-        </div>
-        <div className="text-right">
-          <div className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Stars</div>
           {pick.whale ? (
-            <span className="mt-1 inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-              ★10 Whale
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-[0_6px_20px_-6px_rgba(168,85,247,0.7)]">
+              <Sparkles className="h-3 w-3" /> ★10 Whale
             </span>
           ) : (
-            <div className="flex items-center gap-0.5 mt-1 justify-end">
+            <div className="flex items-center gap-0.5">
               {Array.from({ length: 5 }).map((_, j) => (
                 <Star
                   key={j}
@@ -282,77 +291,144 @@ function PickCard({ pick }: { pick: Pick }) {
             </div>
           )}
         </div>
-      </div>
 
-      {/* Date + venue */}
-      <div className="mt-5 text-xs text-slate-500 leading-relaxed">
-        <span className="text-slate-300 font-semibold">{pick.date}</span>
-        <span className="mx-2 text-slate-600">·</span>
-        {pick.venue}
-      </div>
-
-      {/* Matchup */}
-      <div className="mt-4 flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-2">
-          <div className={`h-7 w-7 rounded-full bg-gradient-to-br ${pick.away.gradient} flex items-center justify-center text-[9px] font-extrabold text-white`}>
-            {pick.away.initials}
-          </div>
-          <span className="text-white font-bold text-sm">{pick.away.name}</span>
-        </div>
-        <span className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">vs</span>
-        <div className="flex items-center gap-2">
-          <div className={`h-7 w-7 rounded-full bg-gradient-to-br ${pick.home.gradient} flex items-center justify-center text-[9px] font-extrabold text-white`}>
-            {pick.home.initials}
-          </div>
-          <span className="text-white font-bold text-sm">{pick.home.name}</span>
-        </div>
-      </div>
-
-      {/* Confidence */}
-      <div className="mt-5">
-        <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded-md bg-white/5 border border-white/10 text-slate-300">
-            Graded Pick
+        {/* Time + venue */}
+        <div className="mt-4 flex items-center gap-3 text-xs text-slate-400">
+          <span className="inline-flex items-center gap-1.5">
+            <Clock className="h-3 w-3 text-slate-500" />
+            <span className="text-slate-300 font-semibold">{dateStr}</span>
+            <span className="text-cyan-300 font-bold">{timeStr}</span>
           </span>
-          <span className="text-sm font-extrabold text-cyan-300">{pick.confidence}% Confidence</span>
         </div>
-        <div className="mt-2 h-1.5 rounded-full bg-white/5 overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-[#1E90FF] via-[#22D3EE] to-[#A855F7]"
-            style={{ width: `${pick.confidence}%` }}
-          />
+        <div className="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+          <MapPin className="h-3 w-3" />
+          <span className="truncate">{venueShort}</span>
         </div>
-      </div>
 
-      {/* Pick body / members-only */}
-      <div className="mt-5 flex-1">
-        {pick.locked ? (
-          <div className="rounded-2xl glass p-5 text-center">
-            <div className="mx-auto h-10 w-10 rounded-2xl bg-gradient-to-br from-[#1E90FF] to-[#A855F7] flex items-center justify-center mb-3">
-              <Lock className="h-4 w-4 text-white" />
+        {/* Matchup showdown */}
+        <div className="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+          <TeamCol team={pick.away} align="left" />
+          <div className="flex flex-col items-center">
+            <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">vs</div>
+            <div className="my-1 h-8 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+          </div>
+          <TeamCol team={pick.home} align="right" />
+        </div>
+
+        {/* Confidence: ring + label */}
+        <div className="mt-6 flex items-center gap-4 rounded-2xl border border-white/10 bg-black/30 p-4">
+          <ConfidenceRing value={pick.confidence} />
+          <div className="flex-1 min-w-0">
+            <div className="text-[10px] uppercase tracking-widest font-bold text-slate-500">
+              Model Confidence
             </div>
-            <div className="text-sm font-bold text-white">Members Only Pick</div>
-            <div className="text-xs text-slate-400 mt-1">Login or subscribe to unlock this pick</div>
-            <div className="mt-4 flex gap-2 justify-center">
-              <button className="btn-secondary !py-2 !px-4 !text-xs">Log In</button>
-              <button className="btn-primary !py-2 !px-4 !text-xs">Subscribe</button>
+            <div className="text-base font-extrabold text-white mt-0.5">{pick.confidence}% edge</div>
+            <div className="mt-1 flex items-center gap-1 text-[11px] text-emerald-400 font-semibold">
+              <TrendingUp className="h-3 w-3" /> +EV detected
             </div>
           </div>
-        ) : (
-          <div className="rounded-2xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/10 to-indigo-500/10 p-5">
-            <div className="eyebrow text-cyan-300">Pick</div>
-            <div className="mt-1 text-lg font-extrabold text-white">{pick.pick}</div>
-            <div className="mt-1 text-xs text-slate-400">Locked at pre-line snapshot</div>
-          </div>
-        )}
-      </div>
-
-      {/* Author */}
-      <div className="mt-5 pt-4 border-t border-white/10 flex items-center gap-2">
-        <div className={`h-7 w-7 rounded-full bg-gradient-to-br ${pick.author.gradient} flex items-center justify-center text-xs font-bold text-white`}>
-          {pick.author.initial}
         </div>
-        <span className="text-sm text-slate-300">{pick.author.name}</span>
+
+        {/* Pick reveal */}
+        <div className="mt-4 flex-1">
+          {pick.locked ? (
+            <button className="w-full group/lock flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-indigo-400/40 px-4 py-3 transition">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#1E90FF] to-[#A855F7] flex items-center justify-center flex-shrink-0">
+                  <Lock className="h-4 w-4 text-white" />
+                </div>
+                <div className="text-left min-w-0">
+                  <div className="text-sm font-bold text-white">Members Only Pick</div>
+                  <div className="text-[11px] text-slate-400 truncate">Subscribe to unlock the play</div>
+                </div>
+              </div>
+              <span className="text-xs font-bold uppercase tracking-widest text-cyan-300 group-hover/lock:text-white whitespace-nowrap">
+                Unlock <ArrowRight className="inline h-3 w-3" />
+              </span>
+            </button>
+          ) : (
+            <div className="rounded-2xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/10 to-indigo-500/10 px-4 py-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-[10px] uppercase tracking-widest text-cyan-300 font-bold">The Pick</div>
+                  <div className="mt-0.5 text-base font-extrabold text-white truncate">{pick.pick}</div>
+                </div>
+                <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">
+                  Live
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className={`h-7 w-7 rounded-full bg-gradient-to-br ${pick.author.gradient} flex items-center justify-center text-xs font-bold text-white flex-shrink-0`}>
+              {pick.author.initial}
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-semibold text-slate-200 truncate">{pick.author.name}</div>
+              <div className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Analyst</div>
+            </div>
+          </div>
+          <button className="text-[11px] font-bold uppercase tracking-widest text-slate-400 hover:text-cyan-300 transition flex items-center gap-1">
+            Analysis <ArrowRight className="h-3 w-3" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TeamCol({ team, align }: { team: Team; align: "left" | "right" }) {
+  return (
+    <div className={`flex items-center gap-2.5 ${align === "right" ? "flex-row-reverse text-right" : ""}`}>
+      <div className={`h-11 w-11 rounded-2xl bg-gradient-to-br ${team.gradient} flex items-center justify-center text-[10px] font-extrabold text-white shadow-lg ring-2 ring-white/10 flex-shrink-0`}>
+        {team.initials}
+      </div>
+      <div className="min-w-0">
+        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+          {align === "left" ? "Away" : "Home"}
+        </div>
+        <div className="text-sm font-bold text-white truncate">{team.name}</div>
+      </div>
+    </div>
+  );
+}
+
+function ConfidenceRing({ value }: { value: number }) {
+  const size = 64;
+  const stroke = 6;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const offset = c - (value / 100) * c;
+  return (
+    <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <defs>
+          <linearGradient id={`ring-${value}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1E90FF" />
+            <stop offset="50%" stopColor="#22D3EE" />
+            <stop offset="100%" stopColor="#A855F7" />
+          </linearGradient>
+        </defs>
+        <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,0.06)" strokeWidth={stroke} fill="none" />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          stroke={`url(#ring-${value})`}
+          strokeWidth={stroke}
+          fill="none"
+          strokeDasharray={c}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          style={{ transition: "stroke-dashoffset 1s ease" }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center text-sm font-extrabold text-white">
+        {value}%
       </div>
     </div>
   );
