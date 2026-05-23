@@ -2,11 +2,20 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BarChart3, ChevronDown, ArrowRight } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { AuthModal, type AuthMode } from "./AuthModal";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<AuthMode>("login");
+
+  const openAuth = (mode: AuthMode) => {
+    setAuthMode(mode);
+    setAuthOpen(true);
+  };
 
   return (
+    <>
     <header className="fixed top-4 left-0 right-0 z-50">
       <div className="container-x">
         <nav
@@ -75,15 +84,25 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a href="#login" className="hidden sm:block text-sm text-slate-200 hover:text-white">
+            <button
+              onClick={() => openAuth("login")}
+              className="hidden sm:block text-sm text-slate-200 hover:text-white"
+            >
               Log In
-            </a>
-            <a href="#join" className="btn-primary !py-2 !px-4 !text-sm">
+            </button>
+            <button onClick={() => openAuth("signup")} className="btn-primary !py-2 !px-4 !text-sm">
               Join Now <ArrowRight className="h-3.5 w-3.5" />
-            </a>
+            </button>
           </div>
         </nav>
       </div>
     </header>
+    <AuthModal
+      open={authOpen}
+      mode={authMode}
+      onClose={() => setAuthOpen(false)}
+      onModeChange={setAuthMode}
+    />
+    </>
   );
 }
