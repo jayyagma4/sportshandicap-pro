@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Lock, Star, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { Lock, Star, ChevronLeft, ChevronRight, ArrowRight, MapPin, Clock, TrendingUp, Sparkles } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const Route = createFileRoute("/picks")({
