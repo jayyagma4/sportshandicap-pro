@@ -1,48 +1,56 @@
-# Sportshandicapper Build Plan
+# Picks Page Redesign
 
-A premium dark-themed sports handicapping platform with aurora animations, glassmorphism cards, and three routes.
+Rebuild `/picks` to match the structure of the inSpin reference screenshots — but rendered entirely in the Sportshandicapper aurora / blue→cyan→purple language (NO orange, NO flat black).
 
-## Tech & Setup
-- TanStack Start + React 19 + TS + Tailwind v4 (already scaffolded)
-- Add Inter via Google Fonts in `__root.tsx`
-- Lucide icons (already installed)
-- Logo: I will generate a "Sportshandicapper" logo as `src/assets/logo.png` (you can swap it later for your own)
+## New layout (top to bottom)
 
-## Design System (`src/styles.css`)
-Extend with:
-- Color tokens (oklch equivalents of #060818, #1E90FF, #22D3EE, #A855F7, #10B981, slate #94A3B8)
-- Utility classes: `.container-x`, `.btn-primary`, `.btn-secondary`, `.card-premium`, `.eyebrow`, `.gradient-text`, `.divider-glow`
-- Keyframes: `aurora-float-1..4`, `conic-spin`, `scan-beam`, `fade-up`
-- No grid background pattern
+1. **Page header**
+   - Eyebrow with live ping dot: "Today's board"
+   - Title "Expert Picks" with gradient on "Picks"
+   - Subtitle: "Our latest betting picks across all sports"
 
-## Shared Components (`src/components/`)
-- `AuroraBackground.tsx` — 4 blurred radial blobs, conic shimmer, scan beam, noise overlay, vignette
-- `ParticleField.tsx` — canvas, ~110 particles, indigo/violet, line connections (client-only via `useEffect`)
-- `Navbar.tsx` — floating pill, logo, center links with "New" badge & live dot, Data & Tools dropdown (Betting Tools, Live Odds, Consensus, Trends — all "Soon"), Log In, Join Now gradient CTA
-- `Footer.tsx` — logo, tagline, product/legal links, 21+ disclaimer
-- `ScrollReveal.tsx` — IntersectionObserver wrapper, fade-up + stagger
-- `Counter.tsx` — animated count-up on scroll into view
-- `PickCard.tsx`, `ArticleCard.tsx`, `PackageCard.tsx` — reusable
-- `SiteLayout.tsx` — wraps Aurora + Particles + Navbar + Outlet + Footer (used in `__root.tsx`)
+2. **Sport filter pills**
+   - Pills: All, NFL, NCAAF, NBA, NCAAB, MLB, NHL
+   - Active pill = gradient #1E90FF → #A855F7 fill + glow
+   - Inactive = glass pill with white/10 border, hover lifts border to indigo-400/30
+   - Client-side filter (useState) on the picks list
 
-## Routes
-1. **`src/routes/index.tsx`** — Hero (with ROI Simulator glass card), Exclusive Articles (1 featured + 2 stacked), Active Picks (1 whale featured + 3 stacked), Trust Stats Bar (4 counters), Membership Packages (6 cards, 3-col, Most Popular highlighted), Data & Tools (4 cards with "Soon"), About Us (2-col with stat grid)
-2. **`src/routes/picks.tsx`** — 9 pick cards in 3-col grid, locked cards show blur + "Members Only" overlay
-3. **`src/routes/packages.tsx`** — 4 tier cards (Free Trial, Weekly $79, Monthly $249 highlighted, Premium Season $899)
+3. **Login / Join banner**
+   - Full-width glass card, rounded-2xl, subtle aurora glow
+   - Left: "Login or join to see full pick details." + slate subtext "Game info and status are visible to all."
+   - Right: secondary "Log In" + primary gradient "Join Now"
 
-Each route sets unique `head()` meta (title, description, og:title, og:description).
+4. **Picks grid (3-col)**
+   Each card (card-premium) contains:
+   - Top row: sport icon in gradient circle + sport label (NBA/MLB/etc) + "Graded" pill on left; "STARS" label + filled star rating on right (whale rows get a `★10 WHALE` gradient pill)
+   - Date/time + venue line in slate-500
+   - Matchup row: two small team logo circles (gradient initials) with team names + "vs" separator
+   - Confidence: "Graded Pick" chip + bold cyan "XX% Confidence" + gradient progress bar
+   - Members-only inner card: glass panel with lock icon, "Members Only Pick", "Login or subscribe to unlock this pick", two buttons (Log In secondary, Subscribe primary)
+   - Footer divider + author row: gradient initial avatar + name in slate
 
-## Root Updates
-- `__root.tsx`: add Inter font link, wrap `<Outlet />` in `SiteLayout` (Aurora + Particles + Navbar + Footer)
-- Update default meta to Sportshandicapper
+5. **Pagination**
+   - Centered: prev arrow, numbered buttons 1–4, next arrow
+   - Active page = gradient fill; others = glass pills
+   - Client-side state only (no real paging — first page shows 9 picks, others show placeholder slice)
 
-## Content Specifics
-All copy, prices, stats, matchups, authors, dates exactly as specified in your message.
+## Data
+Expand current pick list to ~10 entries with: sport, teams (with initials/colors), date/time, venue, graded status, stars (1–5 or 10 whale), confidence %, locked flag, author name. Some Graded + unlocked (show pick text), most locked.
 
-## Technical Notes
-- ParticleField & Counter use `useEffect` so SSR-safe (no `ssr: false` needed)
-- Aurora animations: pure CSS keyframes on absolute-positioned blurred divs
-- Logo: generated PNG asset, imported as ES6 module
-- No backend / no Lovable Cloud (purely static marketing UI)
+## Components
+- Add `SportIcon` helper (small gradient circle with sport letter/emoji) — keeps it lightweight, no new deps
+- Reuse existing `card-premium`, `btn-primary`, `btn-secondary`, `ScrollReveal`
+- Star row, progress bar, members-only overlay inlined in the card component
+
+## Files touched
+- `src/routes/picks.tsx` — full rewrite of layout, keep route + head() identical
+- No CSS additions needed (tokens already cover it)
+- No other routes change
+
+## Style guardrails (Sportshandicapper, not inSpin)
+- Background stays aurora; cards stay glass + white/10 border
+- Accent colors: #1E90FF, #22D3EE, #A855F7, emerald for live dots
+- Stars: cyan-300 instead of yellow (matches palette better) — confirm if you'd prefer yellow
+- All pills rounded-full, gradient-text on heading
 
 Ready to build on approval.
