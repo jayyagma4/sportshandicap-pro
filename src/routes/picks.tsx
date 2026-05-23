@@ -129,58 +129,117 @@ function PicksPage() {
 
   return (
     <div className="container-x py-12">
-      {/* Header */}
+      {/* Hero header */}
       <ScrollReveal>
-        <div className="eyebrow text-emerald-300 mb-3 flex items-center gap-2">
-          <span className="relative h-2 w-2 rounded-full bg-emerald-400 ping-soft" /> Today's board
-        </div>
-        <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.05]">
-          <span className="gradient-text">Expert </span>
-          <span className="gradient-text-vivid">Picks.</span>
-        </h1>
-        <p className="mt-4 text-lg text-slate-400 max-w-2xl">
-          Our latest betting picks across all sports — timestamped before lines move and graded after
-          the final whistle.
-        </p>
-      </ScrollReveal>
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0D1224]/90 via-[#0A0C1C]/80 to-[#0D1224]/90 p-8 md:p-12">
+          {/* aurora glows */}
+          <div className="absolute -top-32 -left-24 h-72 w-72 rounded-full bg-indigo-500/30 blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-cyan-500/25 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl pointer-events-none" />
+          {/* scan beam */}
+          <div className="scan-beam absolute inset-0 pointer-events-none opacity-40" />
 
-      {/* Sport filter */}
-      <ScrollReveal delay={100}>
-        <div className="mt-10 flex flex-wrap gap-2">
-          {sports.map((s) => {
-            const active = activeSport === s;
-            return (
-              <button
-                key={s}
-                onClick={() => { setActiveSport(s); setPage(1); }}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
-                  active
-                    ? "bg-gradient-to-r from-[#1E90FF] to-[#A855F7] text-white shadow-[0_8px_30px_-8px_rgba(99,102,241,0.7)]"
-                    : "glass text-slate-300 hover:border-indigo-400/40 hover:text-white"
-                }`}
-              >
-                {s}
-              </button>
-            );
-          })}
-        </div>
-      </ScrollReveal>
-
-      {/* Login banner */}
-      <ScrollReveal delay={150}>
-        <div className="mt-8 relative overflow-hidden rounded-2xl glass p-6 md:p-7">
-          <div className="absolute -top-20 -right-20 h-60 w-60 rounded-full bg-indigo-500/25 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 h-60 w-60 rounded-full bg-cyan-500/20 blur-3xl pointer-events-none" />
-          <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="relative grid lg:grid-cols-[1.4fr_1fr] gap-10 items-center">
             <div>
-              <div className="text-white font-bold text-base md:text-lg">
-                Login or join to see full pick details.{" "}
-                <span className="text-slate-400 font-normal">Game info and status are visible to all.</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5">
+                <span className="relative h-2 w-2 rounded-full bg-emerald-400 ping-soft" />
+                <span className="eyebrow text-emerald-300 !mb-0">Today's board · Live</span>
+              </div>
+
+              <h1 className="mt-5 text-5xl md:text-7xl font-extrabold leading-[1.02] tracking-tight">
+                <span className="gradient-text">Expert </span>
+                <span className="gradient-text-vivid">Picks</span>
+                <span className="text-cyan-300">.</span>
+              </h1>
+
+              <p className="mt-5 text-lg text-slate-400 max-w-xl">
+                Timestamped before lines move. Graded after the final whistle. Every play tracked, every
+                edge documented — no rewriting history.
+              </p>
+
+              {/* mini stats strip */}
+              <div className="mt-7 grid grid-cols-3 gap-3 max-w-md">
+                {[
+                  { v: "10", l: "Live today" },
+                  { v: "67%", l: "30-day hit" },
+                  { v: "+184u", l: "YTD profit" },
+                ].map((s) => (
+                  <div key={s.l} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5">
+                    <div className="text-xl font-extrabold gradient-text-vivid">{s.v}</div>
+                    <div className="text-[11px] uppercase tracking-wider text-slate-500 mt-0.5">{s.l}</div>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="flex gap-3">
-              <button className="btn-secondary">Log In</button>
-              <button className="btn-primary">Join Now <ArrowRight className="h-4 w-4" /></button>
+
+            {/* right side decorative card */}
+            <div className="hidden lg:block relative">
+              <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-500/10 to-cyan-500/5 p-6 backdrop-blur">
+                <div className="conic-shimmer absolute -inset-px rounded-2xl opacity-30 pointer-events-none" />
+                <div className="relative flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#1E90FF] to-[#A855F7] grid place-items-center">
+                    <Sparkles className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-white font-bold">Featured Whale</div>
+                    <div className="text-xs text-slate-400">Highest confidence today</div>
+                  </div>
+                </div>
+                <div className="mt-5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 grid place-items-center text-white text-xs font-bold">BAL</div>
+                    <span className="text-slate-500 text-sm">vs</span>
+                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 grid place-items-center text-white text-xs font-bold">ATH</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-extrabold text-cyan-300">92%</div>
+                    <div className="text-[10px] uppercase tracking-wider text-slate-500">confidence</div>
+                  </div>
+                </div>
+                <div className="mt-4 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                  <div className="h-full w-[92%] bg-gradient-to-r from-[#1E90FF] via-[#22D3EE] to-[#A855F7]" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      {/* Sport filter + login row */}
+      <ScrollReveal delay={100}>
+        <div className="mt-8 flex flex-col xl:flex-row xl:items-center gap-5">
+          {/* filter pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 xl:pb-0 flex-1 min-w-0">
+            <span className="text-[11px] uppercase tracking-widest text-slate-500 pr-1 shrink-0">League</span>
+            <div className="h-5 w-px bg-white/10 mr-1 shrink-0" />
+            {sports.map((s) => {
+              const active = activeSport === s;
+              return (
+                <button
+                  key={s}
+                  onClick={() => { setActiveSport(s); setPage(1); }}
+                  className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition ${
+                    active
+                      ? "bg-gradient-to-r from-[#1E90FF] to-[#A855F7] text-white shadow-[0_8px_30px_-8px_rgba(99,102,241,0.7)]"
+                      : "border border-white/10 bg-white/[0.03] text-slate-300 hover:border-indigo-400/40 hover:text-white"
+                  }`}
+                >
+                  {s}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* compact login CTA */}
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-indigo-500/10 via-white/[0.02] to-cyan-500/10 p-3 pl-5 flex items-center gap-4 xl:w-auto">
+            <Lock className="h-4 w-4 text-cyan-300 shrink-0" />
+            <div className="text-sm text-slate-300 min-w-0">
+              <span className="text-white font-semibold">Unlock full picks.</span>{" "}
+              <span className="text-slate-400">Game info is free for all.</span>
+            </div>
+            <div className="flex gap-2 ml-auto shrink-0">
+              <button className="btn-secondary !py-2 !px-4 text-sm">Log In</button>
+              <button className="btn-primary !py-2 !px-4 text-sm">Join <ArrowRight className="h-3.5 w-3.5" /></button>
             </div>
           </div>
         </div>
