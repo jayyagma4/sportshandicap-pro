@@ -108,7 +108,7 @@ function ProgressBar({
       </div>
       <div className="h-2 rounded-full bg-white/5 overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[#1E90FF] to-[#22D3EE]"
+          className="h-full rounded-full bg-[#1E90FF]"
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -122,7 +122,7 @@ const articles = [
     title: "GAME PREVIEW: Texas Rangers vs. Colorado Rockies analysis, best bets",
     author: "Michael Rinner",
     date: "May 19, 2026",
-    gradient: "from-rose-500 to-orange-500",
+    gradient: "bg-rose-600",
     initial: "M",
   },
   {
@@ -130,7 +130,7 @@ const articles = [
     title: "Cavaliers vs Knicks: Eastern Conference clash with playoff implications",
     author: "Mike Davis",
     date: "May 18, 2026",
-    gradient: "from-purple-500 to-indigo-500",
+    gradient: "bg-indigo-600",
     initial: "M",
   },
   {
@@ -138,7 +138,7 @@ const articles = [
     title: "Blue Jays vs Yankees: AL East rivalry sets up sharp value spots",
     author: "Michael Rinner",
     date: "May 17, 2026",
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "bg-blue-600",
     initial: "M",
   },
 ];
@@ -176,8 +176,8 @@ function Articles() {
 function ArticleCard({ article, large = false }: { article: typeof articles[0]; large?: boolean }) {
   return (
     <article className="card-premium overflow-hidden group h-full flex flex-col">
-      <div className={`relative ${large ? "h-72" : "h-40"} bg-gradient-to-br ${article.gradient} overflow-hidden`}>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      <div className={`relative ${large ? "h-72" : "h-40"} ${article.gradient} overflow-hidden`}>
+        <div className="absolute inset-0 bg-black/40" />
         <span className="absolute top-4 left-4 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-md bg-black/40 backdrop-blur-md text-white border border-white/20">
           {article.tag}
         </span>
@@ -187,7 +187,7 @@ function ArticleCard({ article, large = false }: { article: typeof articles[0]; 
           {article.title}
         </h3>
         <div className="mt-4 flex items-center gap-3">
-          <div className={`h-8 w-8 rounded-full bg-gradient-to-br ${article.gradient} flex items-center justify-center text-white font-bold text-sm`}>
+          <div className={`h-8 w-8 rounded-full ${article.gradient} flex items-center justify-center text-white font-bold text-sm`}>
             {article.initial}
           </div>
           <div className="text-xs">
@@ -237,7 +237,7 @@ function ActivePicks() {
           <div className="card-premium p-8 relative overflow-hidden h-full">
             <div className="absolute -top-20 -right-20 h-60 w-60 rounded-full bg-purple-500/20 blur-3xl" />
             <div className="flex items-center gap-2 mb-4">
-              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+              <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-md bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 text-white">
                 ★10 Whale
               </span>
               <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1.5">
@@ -255,7 +255,7 @@ function ActivePicks() {
                 <div className="eyebrow">Confidence</div>
                 <div className="text-3xl font-bold text-white mt-1">{featuredPick.confidence}%</div>
                 <div className="mt-2 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-[#1E90FF] to-[#22D3EE]" style={{ width: `${featuredPick.confidence}%` }} />
+                  <div className="h-full bg-[#1E90FF]" style={{ width: `${featuredPick.confidence}%` }} />
                 </div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
@@ -288,7 +288,7 @@ function ActivePicks() {
                   <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded bg-white/5 border border-white/10 text-slate-300">
                     {p.tag}
                   </span>
-                  <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded bg-gradient-to-r from-purple-500/30 to-pink-500/30 text-purple-200 border border-purple-400/30">
+                  <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded bg-cyan-500/15 text-cyan-200 border border-cyan-400/30">
                     {p.label}
                   </span>
                 </div>
@@ -302,7 +302,7 @@ function ActivePicks() {
                   <div className="text-cyan-300 font-bold">{p.conf}% conf</div>
                 </div>
                 <div className="mt-3 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-[#1E90FF] to-[#A855F7]" style={{ width: `${p.conf}%` }} />
+                  <div className="h-full bg-[#1E90FF]" style={{ width: `${p.conf}%` }} />
                 </div>
               </div>
             </ScrollReveal>
@@ -365,7 +365,7 @@ function Packages() {
           <ScrollReveal key={p.name} delay={i * 80}>
             <div className={`card-premium p-7 h-full flex flex-col relative ${p.popular ? "ring-2 ring-indigo-400/50" : ""}`}>
               {p.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-gradient-to-r from-[#1E90FF] to-[#A855F7] text-white shadow-lg">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-[#1E90FF] text-white shadow-lg">
                   Most Popular
                 </div>
               )}
@@ -423,7 +423,7 @@ function DataTools() {
         {tools.map((t, i) => (
           <ScrollReveal key={t.name} delay={i * 100}>
             <div className="card-premium p-6 h-full">
-              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-[#1E90FF] to-[#A855F7] flex items-center justify-center mb-4">
+              <div className="h-12 w-12 rounded-2xl bg-[#1E90FF] flex items-center justify-center mb-4">
                 <t.icon className="h-6 w-6 text-white" />
               </div>
               <div className="flex items-center gap-2 mb-2">

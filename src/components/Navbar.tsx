@@ -32,7 +32,7 @@ export function Navbar() {
               className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-200 hover:text-white rounded-full hover:bg-white/5 transition"
             >
               Exclusive Articles
-              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-200 text-white">
                 New
               </span>
             </Link>
