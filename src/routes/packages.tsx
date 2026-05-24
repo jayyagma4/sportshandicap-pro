@@ -55,7 +55,7 @@ function PackagesPage() {
           <ScrollReveal key={t.name} delay={i * 100}>
             <div className={`card-premium p-7 h-full flex flex-col relative ${t.popular ? "ring-2 ring-indigo-400/60" : ""}`}>
               {t.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-gradient-to-r from-[#1E90FF] to-[#A855F7] text-white shadow-lg">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-[#1E90FF] text-white shadow-lg">
                   Most Popular
                 </div>
               )}

@@ -66,13 +66,13 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
       {/* Modal */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl grid md:grid-cols-[1.05fr_1fr] rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#0D1224]/95 via-[#0A0C1C]/95 to-[#0D1224]/95 shadow-[0_40px_120px_-20px_rgba(30,144,255,0.35)] animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+        className="relative w-full max-w-5xl grid md:grid-cols-[1.05fr_1fr] rounded-3xl overflow-hidden border border-white/10 bg-[#0A0C1C]/85 shadow-[0_40px_120px_-20px_rgba(30,144,255,0.35)] animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
       >
         {/* Top gradient strip */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-cyan-400/50" />
 
         {/* LEFT — Brand panel */}
-        <div className="relative hidden md:flex flex-col justify-between p-10 bg-gradient-to-br from-[#0A0F22] via-[#0B1430] to-[#0A0C1C] overflow-hidden">
+        <div className="relative hidden md:flex flex-col justify-between p-10 bg-[#0A0F22] overflow-hidden">
           <div
             className="absolute -top-20 -left-20 w-[380px] h-[380px] rounded-full blur-[110px] opacity-50"
             style={{ background: "#1E90FF" }}
@@ -116,7 +116,7 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
                 key={f.label}
                 className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5"
               >
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#1E90FF]/30 to-[#A855F7]/30 border border-white/10 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-lg bg-[#1E90FF] border border-white/10 flex items-center justify-center">
                   <f.icon className="h-4 w-4 text-cyan-300" />
                 </div>
                 <span className="text-sm text-slate-200">{f.label}</span>
@@ -157,7 +157,7 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
           {/* Tabs */}
           <div className="mt-6 relative grid grid-cols-2 p-1 rounded-full border border-white/10 bg-white/[0.03]">
             <span
-              className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#1E90FF] to-[#A855F7] shadow-[0_8px_24px_-8px_rgba(30,144,255,0.7)] transition-transform duration-300"
+              className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-[#1E90FF] shadow-[0_8px_24px_-8px_rgba(30,144,255,0.7)] transition-transform duration-300"
               style={{ transform: isLogin ? "translateX(4px)" : "translateX(calc(100% + 4px))" }}
             />
             <button
@@ -340,7 +340,7 @@ function Checkbox({
       onClick={() => onChange(!checked)}
       className={`relative h-4 w-4 rounded-[5px] border flex items-center justify-center transition flex-shrink-0 mt-0.5 ${
         checked
-          ? "bg-gradient-to-br from-[#1E90FF] to-[#A855F7] border-transparent"
+          ? "bg-[#1E90FF] border-transparent"
           : "border-white/20 bg-white/[0.03] hover:border-white/40"
       }`}
       aria-checked={checked}

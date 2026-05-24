@@ -131,7 +131,7 @@ function PicksPage() {
     <div className="container-x py-12">
       {/* Hero header */}
       <ScrollReveal>
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0D1224]/90 via-[#0A0C1C]/80 to-[#0D1224]/90 p-8 md:p-12">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0A0C1C]/85 p-8 md:p-12">
           {/* aurora glows */}
           <div className="absolute -top-32 -left-24 h-72 w-72 rounded-full bg-indigo-500/30 blur-3xl pointer-events-none" />
           <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-cyan-500/25 blur-3xl pointer-events-none" />
@@ -174,10 +174,10 @@ function PicksPage() {
 
             {/* right side decorative card */}
             <div className="hidden lg:block relative">
-              <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-500/10 to-cyan-500/5 p-6 backdrop-blur">
+              <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur">
                 <div className="conic-shimmer absolute -inset-px rounded-2xl opacity-30 pointer-events-none" />
                 <div className="relative flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#1E90FF] to-[#A855F7] grid place-items-center">
+                  <div className="h-10 w-10 rounded-xl bg-[#1E90FF] grid place-items-center">
                     <Sparkles className="h-5 w-5 text-white" />
                   </div>
                   <div>
@@ -197,7 +197,7 @@ function PicksPage() {
                   </div>
                 </div>
                 <div className="mt-4 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                  <div className="h-full w-[92%] bg-gradient-to-r from-[#1E90FF] via-[#22D3EE] to-[#A855F7]" />
+                  <div className="h-full w-[92%] bg-[#1E90FF]" />
                 </div>
               </div>
             </div>
@@ -220,7 +220,7 @@ function PicksPage() {
                   onClick={() => { setActiveSport(s); setPage(1); }}
                   className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition ${
                     active
-                      ? "bg-gradient-to-r from-[#1E90FF] to-[#A855F7] text-white shadow-[0_8px_30px_-8px_rgba(99,102,241,0.7)]"
+                      ? "bg-[#1E90FF] text-white shadow-[0_8px_30px_-8px_rgba(99,102,241,0.7)]"
                       : "border border-white/10 bg-white/[0.03] text-slate-300 hover:border-indigo-400/40 hover:text-white"
                   }`}
                 >
@@ -231,7 +231,7 @@ function PicksPage() {
           </div>
 
           {/* compact login CTA */}
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-indigo-500/10 via-white/[0.02] to-cyan-500/10 p-3 pl-5 flex items-center gap-4 xl:w-auto">
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-3 pl-5 flex items-center gap-4 xl:w-auto">
             <Lock className="h-4 w-4 text-cyan-300 shrink-0" />
             <div className="text-sm text-slate-300 min-w-0">
               <span className="text-white font-semibold">Unlock full picks.</span>{" "}
@@ -274,7 +274,7 @@ function PicksPage() {
               onClick={() => setPage(n)}
               className={`h-10 w-10 rounded-xl text-sm font-bold transition ${
                 active
-                  ? "bg-gradient-to-r from-[#1E90FF] to-[#A855F7] text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.7)]"
+                  ? "bg-[#1E90FF] text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.7)]"
                   : disabled
                   ? "glass text-slate-600 cursor-not-allowed"
                   : "glass text-slate-300 hover:text-white hover:border-indigo-400/40"
@@ -336,7 +336,7 @@ function PickCard({ pick }: { pick: Pick }) {
             </div>
           </div>
           {pick.whale ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-[0_6px_20px_-6px_rgba(168,85,247,0.7)]">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 text-white shadow-[0_6px_20px_-6px_rgba(168,85,247,0.7)]">
               <Sparkles className="h-3 w-3" /> ★10 Whale
             </span>
           ) : (
@@ -369,7 +369,7 @@ function PickCard({ pick }: { pick: Pick }) {
           <TeamCol team={pick.away} align="left" />
           <div className="flex flex-col items-center">
             <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">vs</div>
-            <div className="my-1 h-8 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+            <div className="my-1 h-8 w-px bg-white/15" />
           </div>
           <TeamCol team={pick.home} align="right" />
         </div>
@@ -393,7 +393,7 @@ function PickCard({ pick }: { pick: Pick }) {
           {pick.locked ? (
             <button className="w-full group/lock flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-indigo-400/40 px-4 py-3 transition">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#1E90FF] to-[#A855F7] flex items-center justify-center flex-shrink-0">
+                <div className="h-9 w-9 rounded-xl bg-[#1E90FF] flex items-center justify-center flex-shrink-0">
                   <Lock className="h-4 w-4 text-white" />
                 </div>
                 <div className="text-left min-w-0">
@@ -406,7 +406,7 @@ function PickCard({ pick }: { pick: Pick }) {
               </span>
             </button>
           ) : (
-            <div className="rounded-2xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/10 to-indigo-500/10 px-4 py-3">
+            <div className="rounded-2xl border border-cyan-400/30 bg-cyan-500/10 px-4 py-3">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <div className="text-[10px] uppercase tracking-widest text-cyan-300 font-bold">The Pick</div>
