@@ -34,7 +34,7 @@ type Pick = {
 const sportColors: Record<Pick["sport"], string> = {
   NBA: "from-orange-500 to-red-500",
   NFL: "from-amber-500 to-orange-600",
-  NHL: "from-sky-400 to-blue-600",
+  NHL: "bg-sky-500",
   MLB: "from-rose-400 to-red-500",
   NCAAF: "from-amber-400 to-yellow-600",
   NCAAB: "from-violet-500 to-fuchsia-500",
@@ -45,73 +45,73 @@ const sports: ("All" | Pick["sport"])[] = ["All", "NFL", "NCAAF", "NBA", "NCAAB"
 const picksData: Pick[] = [
   {
     id: "p1", sport: "NBA", date: "May 09, 2026 @ 3:00 PM ET", venue: "Rocket Arena, Cleveland, OH",
-    home: { name: "Cavaliers", initials: "CLE", gradient: "from-red-700 to-amber-500" },
-    away: { name: "Pistons", initials: "DET", gradient: "from-blue-500 to-red-500" },
+    home: { name: "Cavaliers", initials: "CLE", gradient: "bg-red-600" },
+    away: { name: "Pistons", initials: "DET", gradient: "bg-blue-600" },
     stars: 4, confidence: 82, locked: true,
-    author: { name: "Mike Davis", initial: "M", gradient: "from-purple-500 to-indigo-500" },
+    author: { name: "Mike Davis", initial: "M", gradient: "bg-indigo-500" },
   },
   {
     id: "p2", sport: "MLB", date: "May 09, 2026 @ 4:05 PM ET", venue: "Oriole Park at Camden Yards, Baltimore, MD",
-    home: { name: "Orioles", initials: "BAL", gradient: "from-orange-500 to-amber-600" },
-    away: { name: "Athletics", initials: "ATH", gradient: "from-green-600 to-emerald-700" },
+    home: { name: "Orioles", initials: "BAL", gradient: "bg-orange-500" },
+    away: { name: "Athletics", initials: "ATH", gradient: "bg-emerald-600" },
     stars: 5, confidence: 86, locked: true,
-    author: { name: "Michael Rinner", initial: "M", gradient: "from-rose-500 to-orange-500" },
+    author: { name: "Michael Rinner", initial: "M", gradient: "bg-rose-500" },
   },
   {
     id: "p3", sport: "MLB", date: "May 09, 2026 @ 6:05 PM ET", venue: "Citizens Bank Park, Philadelphia, PA",
-    home: { name: "Phillies", initials: "PHI", gradient: "from-red-500 to-rose-600" },
-    away: { name: "Rockies", initials: "COL", gradient: "from-indigo-500 to-purple-600" },
+    home: { name: "Phillies", initials: "PHI", gradient: "bg-rose-600" },
+    away: { name: "Rockies", initials: "COL", gradient: "bg-indigo-600" },
     stars: 10, whale: true, confidence: 89, locked: true,
-    author: { name: "Michael Rinner", initial: "M", gradient: "from-rose-500 to-orange-500" },
+    author: { name: "Michael Rinner", initial: "M", gradient: "bg-rose-500" },
   },
   {
     id: "p4", sport: "MLB", date: "May 08, 2026 @ 6:10 PM ET", venue: "Great American Ball Park, Cincinnati, OH",
-    home: { name: "Reds", initials: "CIN", gradient: "from-red-600 to-red-800" },
-    away: { name: "Astros", initials: "HOU", gradient: "from-orange-500 to-amber-700" },
+    home: { name: "Reds", initials: "CIN", gradient: "bg-red-700" },
+    away: { name: "Astros", initials: "HOU", gradient: "bg-amber-600" },
     stars: 5, confidence: 85, pick: "Astros ML -125", locked: false,
-    author: { name: "David Wilson", initial: "D", gradient: "from-cyan-500 to-blue-500" },
+    author: { name: "David Wilson", initial: "D", gradient: "bg-cyan-500" },
   },
   {
     id: "p5", sport: "MLB", date: "May 08, 2026 @ 6:40 PM ET", venue: "Citizens Bank Park, Philadelphia, PA",
-    home: { name: "Phillies", initials: "PHI", gradient: "from-red-500 to-rose-600" },
-    away: { name: "Rockies", initials: "COL", gradient: "from-indigo-500 to-purple-600" },
+    home: { name: "Phillies", initials: "PHI", gradient: "bg-rose-600" },
+    away: { name: "Rockies", initials: "COL", gradient: "bg-indigo-600" },
     stars: 1, confidence: 56, locked: true,
-    author: { name: "Michael Rinner", initial: "M", gradient: "from-rose-500 to-orange-500" },
+    author: { name: "Michael Rinner", initial: "M", gradient: "bg-rose-500" },
   },
   {
     id: "p6", sport: "MLB", date: "May 08, 2026 @ 7:05 PM ET", venue: "Oriole Park at Camden Yards, Baltimore, MD",
-    home: { name: "Orioles", initials: "BAL", gradient: "from-orange-500 to-amber-600" },
-    away: { name: "Athletics", initials: "ATH", gradient: "from-green-600 to-emerald-700" },
+    home: { name: "Orioles", initials: "BAL", gradient: "bg-orange-500" },
+    away: { name: "Athletics", initials: "ATH", gradient: "bg-emerald-600" },
     stars: 10, whale: true, confidence: 92, locked: true,
-    author: { name: "Michael Rinner", initial: "M", gradient: "from-rose-500 to-orange-500" },
+    author: { name: "Michael Rinner", initial: "M", gradient: "bg-rose-500" },
   },
   {
     id: "p7", sport: "NFL", date: "May 09, 2026 @ 8:20 PM ET", venue: "Lincoln Financial Field, Philadelphia, PA",
-    home: { name: "Eagles", initials: "PHI", gradient: "from-emerald-600 to-emerald-800" },
-    away: { name: "Cowboys", initials: "DAL", gradient: "from-blue-700 to-slate-800" },
+    home: { name: "Eagles", initials: "PHI", gradient: "bg-emerald-700" },
+    away: { name: "Cowboys", initials: "DAL", gradient: "bg-blue-800" },
     stars: 5, confidence: 88, locked: true,
-    author: { name: "Mike Davis", initial: "M", gradient: "from-purple-500 to-indigo-500" },
+    author: { name: "Mike Davis", initial: "M", gradient: "bg-indigo-500" },
   },
   {
     id: "p8", sport: "NHL", date: "May 09, 2026 @ 7:00 PM ET", venue: "TD Garden, Boston, MA",
-    home: { name: "Bruins", initials: "BOS", gradient: "from-yellow-500 to-amber-700" },
-    away: { name: "Rangers", initials: "NYR", gradient: "from-blue-600 to-red-600" },
+    home: { name: "Bruins", initials: "BOS", gradient: "bg-amber-600" },
+    away: { name: "Rangers", initials: "NYR", gradient: "bg-blue-600" },
     stars: 3, confidence: 70, pick: "Rangers PL +1.5", locked: false,
-    author: { name: "David Wilson", initial: "D", gradient: "from-cyan-500 to-blue-500" },
+    author: { name: "David Wilson", initial: "D", gradient: "bg-cyan-500" },
   },
   {
     id: "p9", sport: "NBA", date: "May 07, 2026 @ 7:00 PM ET", venue: "Little Caesars Arena, Detroit, MI",
-    home: { name: "Pistons", initials: "DET", gradient: "from-blue-500 to-red-500" },
-    away: { name: "Cavaliers", initials: "CLE", gradient: "from-red-700 to-amber-500" },
+    home: { name: "Pistons", initials: "DET", gradient: "bg-blue-600" },
+    away: { name: "Cavaliers", initials: "CLE", gradient: "bg-red-600" },
     stars: 2, confidence: 64, locked: true,
-    author: { name: "David Wilson", initial: "D", gradient: "from-cyan-500 to-blue-500" },
+    author: { name: "David Wilson", initial: "D", gradient: "bg-cyan-500" },
   },
   {
     id: "p10", sport: "NCAAB", date: "May 09, 2026 @ 6:00 PM ET", venue: "Dean Smith Center, Chapel Hill, NC",
-    home: { name: "UNC", initials: "UNC", gradient: "from-sky-400 to-blue-600" },
-    away: { name: "Duke", initials: "DUKE", gradient: "from-blue-800 to-indigo-900" },
+    home: { name: "UNC", initials: "UNC", gradient: "bg-sky-500" },
+    away: { name: "Duke", initials: "DUKE", gradient: "bg-indigo-800" },
     stars: 4, confidence: 77, locked: true,
-    author: { name: "Mike Davis", initial: "M", gradient: "from-purple-500 to-indigo-500" },
+    author: { name: "Mike Davis", initial: "M", gradient: "bg-indigo-500" },
   },
 ];
 
@@ -137,8 +137,7 @@ function PicksPage() {
           <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-cyan-500/25 blur-3xl pointer-events-none" />
           <div className="absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl pointer-events-none" />
           {/* scan beam */}
-          <div className="scan-beam absolute inset-0 pointer-events-none opacity-40" />
-
+          
           <div className="relative grid lg:grid-cols-[1.4fr_1fr] gap-10 items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5">
@@ -175,8 +174,7 @@ function PicksPage() {
             {/* right side decorative card */}
             <div className="hidden lg:block relative">
               <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur">
-                <div className="conic-shimmer absolute -inset-px rounded-2xl opacity-30 pointer-events-none" />
-                <div className="relative flex items-center gap-3">
+                                <div className="relative flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-[#1E90FF] grid place-items-center">
                     <Sparkles className="h-5 w-5 text-white" />
                   </div>
@@ -187,9 +185,9 @@ function PicksPage() {
                 </div>
                 <div className="mt-5 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 grid place-items-center text-white text-xs font-bold">BAL</div>
+                    <div className="h-12 w-12 rounded-full bg-orange-500 grid place-items-center text-white text-xs font-bold">BAL</div>
                     <span className="text-slate-500 text-sm">vs</span>
-                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 grid place-items-center text-white text-xs font-bold">ATH</div>
+                    <div className="h-12 w-12 rounded-full bg-emerald-600 grid place-items-center text-white text-xs font-bold">ATH</div>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-extrabold text-cyan-300">92%</div>
@@ -317,16 +315,16 @@ function PickCard({ pick }: { pick: Pick }) {
   return (
     <div className="card-premium relative overflow-hidden flex flex-col h-full group">
       {/* Sport accent strip */}
-      <div className={`h-1 w-full bg-gradient-to-r ${accent}`} />
+      <div className={`h-1 w-full ${accent}`} />
       {/* Ambient glow */}
-      <div className={`absolute -top-24 -right-24 h-48 w-48 rounded-full bg-gradient-to-br ${accent} opacity-20 blur-3xl pointer-events-none`} />
+      <div className={`absolute -top-24 -right-24 h-48 w-48 rounded-full ${accent} opacity-20 blur-3xl pointer-events-none`} />
 
       <div className="p-6 flex flex-col flex-1 relative">
         {/* Header: sport chip + stars */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10">
-              <div className={`h-5 w-5 rounded-full bg-gradient-to-br ${accent} flex items-center justify-center text-[8px] font-extrabold text-white`}>
+              <div className={`h-5 w-5 rounded-full ${accent} flex items-center justify-center text-[8px] font-extrabold text-white`}>
                 {pick.sport.charAt(0)}
               </div>
               <span className="text-xs font-bold text-white">{pick.sport}</span>
@@ -423,7 +421,7 @@ function PickCard({ pick }: { pick: Pick }) {
         {/* Footer */}
         <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2 min-w-0">
-            <div className={`h-7 w-7 rounded-full bg-gradient-to-br ${pick.author.gradient} flex items-center justify-center text-xs font-bold text-white flex-shrink-0`}>
+            <div className={`h-7 w-7 rounded-full ${pick.author.gradient} flex items-center justify-center text-xs font-bold text-white flex-shrink-0`}>
               {pick.author.initial}
             </div>
             <div className="min-w-0">
@@ -443,7 +441,7 @@ function PickCard({ pick }: { pick: Pick }) {
 function TeamCol({ team, align }: { team: Team; align: "left" | "right" }) {
   return (
     <div className={`flex items-center gap-2.5 ${align === "right" ? "flex-row-reverse text-right" : ""}`}>
-      <div className={`h-11 w-11 rounded-2xl bg-gradient-to-br ${team.gradient} flex items-center justify-center text-[10px] font-extrabold text-white shadow-lg ring-2 ring-white/10 flex-shrink-0`}>
+      <div className={`h-11 w-11 rounded-2xl ${team.gradient} flex items-center justify-center text-[10px] font-extrabold text-white shadow-lg ring-2 ring-white/10 flex-shrink-0`}>
         {team.initials}
       </div>
       <div className="min-w-0">
