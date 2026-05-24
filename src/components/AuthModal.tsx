@@ -52,16 +52,7 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-[#03050F]/85 backdrop-blur-xl" />
-      {/* Aurora glow behind modal */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] rounded-full blur-[140px] opacity-40"
-          style={{
-            background:
-              "conic-gradient(from 0deg, #1E90FF, #22D3EE, #A855F7, #1E90FF)",
-          }}
-        />
-      </div>
+
 
       {/* Modal */}
       <div
