@@ -584,7 +584,7 @@ function Tools() {
 /* --------------------------- TESTIMONIALS --------------------------- */
 
 const reviews = [
-  { name: "Jordan T.", role: "Member · 2 yrs", text: "The picks are graded openly — wins AND losses. That alone separates them from every other service." },
+  { name: "Jordan T.", role: "Member · 2 yrs", text: "The picks are graded openly, wins and losses both. That alone separates them from every other service." },
   { name: "Alex M.", role: "Member · 1 yr", text: "Up 62 units last quarter following the MLB board. Posting times are pre-line move, which matters." },
   { name: "Chris P.", role: "Member · 8 mo", text: "Discord community + transparent records. Feels like a sharp sportsbook, not a hype shop." },
 ];
