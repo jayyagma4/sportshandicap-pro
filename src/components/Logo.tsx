@@ -4,64 +4,62 @@ type Props = {
 };
 
 /**
- * Flat, monochrome-friendly Sportshandicapper logo.
- * No gradients. Single accent color (#1E90FF) + white type on a deep navy plate.
- * Scales cleanly at any size.
+ * Minimal, professional Sportshandicapper logo.
+ * Orbitron typography, single accent color (#1E90FF), no gradients.
  */
 export function Logo({ className = "", height = 40 }: Props) {
   return (
     <svg
       role="img"
       aria-label="Sportshandicapper"
-      viewBox="0 0 320 88"
+      viewBox="0 0 360 72"
       height={height}
       className={className}
       style={{ display: "block" }}
     >
-      {/* Outer plate */}
-      <rect x="2" y="2" width="316" height="84" rx="14" fill="#0A0C1C" stroke="#1E90FF" strokeWidth="2" />
-      {/* Inner hairline frame */}
-      <rect x="10" y="10" width="300" height="68" rx="10" fill="none" stroke="#1E90FF" strokeOpacity="0.35" strokeWidth="1" />
+      {/* Monogram mark */}
+      <g>
+        <rect x="2" y="10" width="52" height="52" rx="10" fill="none" stroke="#1E90FF" strokeWidth="2" />
+        <text
+          x="28"
+          y="48"
+          textAnchor="middle"
+          fill="#FFFFFF"
+          fontFamily="'Orbitron', sans-serif"
+          fontWeight="800"
+          fontSize="26"
+          letterSpacing="0"
+        >
+          S
+        </text>
+        {/* corner accent */}
+        <rect x="44" y="12" width="8" height="2" fill="#1E90FF" />
+        <rect x="50" y="12" width="2" height="8" fill="#1E90FF" />
+      </g>
 
-      {/* Accent bar (left) */}
-      <rect x="20" y="20" width="6" height="48" rx="2" fill="#1E90FF" />
-
-      {/* SPORTS wordmark */}
+      {/* Wordmark */}
       <text
-        x="40"
-        y="46"
+        x="70"
+        y="36"
         fill="#FFFFFF"
-        fontFamily="'Inter','Helvetica Neue',Arial,sans-serif"
-        fontWeight="900"
-        fontSize="30"
-        letterSpacing="4"
+        fontFamily="'Orbitron', sans-serif"
+        fontWeight="700"
+        fontSize="22"
+        letterSpacing="2"
       >
         SPORTS
       </text>
-
-      {/* divider line under SPORTS */}
-      <line x1="40" y1="54" x2="232" y2="54" stroke="#1E90FF" strokeWidth="1.5" />
-
-      {/* HANDICAPPER subline */}
       <text
-        x="40"
-        y="70"
+        x="70"
+        y="58"
         fill="#1E90FF"
-        fontFamily="'Inter','Helvetica Neue',Arial,sans-serif"
-        fontWeight="700"
+        fontFamily="'Orbitron', sans-serif"
+        fontWeight="500"
         fontSize="11"
         letterSpacing="6"
       >
         HANDICAPPER
       </text>
-
-      {/* Right-side mark: stacked bars (analytics nod) */}
-      <g transform="translate(252,22)">
-        <rect x="0" y="30" width="8" height="18" rx="1.5" fill="#1E90FF" opacity="0.55" />
-        <rect x="14" y="18" width="8" height="30" rx="1.5" fill="#1E90FF" opacity="0.8" />
-        <rect x="28" y="6" width="8" height="42" rx="1.5" fill="#1E90FF" />
-        <circle cx="32" cy="6" r="3" fill="#FFFFFF" />
-      </g>
     </svg>
   );
 }
