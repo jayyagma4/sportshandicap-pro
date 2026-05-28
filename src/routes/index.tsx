@@ -558,15 +558,22 @@ function Packages() {
                     : "border-white/10 hover:border-white/20"
                 }`}
               >
-                <div
-                  className={`absolute top-0 left-0 right-0 h-px ${
-                    t.featured ? "bg-[#1E90FF]" : "bg-[#1E90FF]/30"
-                  }`}
-                />
                 {t.featured && (
-                  <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest rounded bg-[#1E90FF] text-white whitespace-nowrap">
-                    {t.tag}
+                  <div className="flex items-center justify-between px-5 py-2 bg-[#1E90FF] text-white">
+                    <span className="text-[10px] font-black uppercase tracking-widest">
+                      ★ {t.tag}
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">
+                      Picked by 73%
+                    </span>
                   </div>
+                )}
+                {!t.featured && (
+                  <div
+                    className={`absolute top-0 left-0 right-0 h-px ${
+                      t.featured ? "bg-[#1E90FF]" : "bg-[#1E90FF]/30"
+                    }`}
+                  />
                 )}
 
                 <div className="p-7 flex-1 flex flex-col">
@@ -595,6 +602,7 @@ function Packages() {
                       {t.name}
                     </h3>
                   </div>
+
 
                   <div className="mt-4 flex items-baseline gap-1.5">
                     <span
