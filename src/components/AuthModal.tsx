@@ -141,7 +141,7 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
             <p className="mt-1.5 text-sm text-slate-400">
               {isLogin
                 ? "Access today's picks and your tracked bankroll."
-                : "Start with a free trial — cancel anytime."}
+                : "Start with a free trial. Cancel anytime."}
             </p>
           </div>
 
