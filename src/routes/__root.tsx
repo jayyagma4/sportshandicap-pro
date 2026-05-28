@@ -55,9 +55,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sportshandicapper — Betting Intelligence At Scale" },
+      { title: "Sportshandicapper | Betting Intelligence At Scale" },
       { name: "description", content: "Institutional-grade sports analytics, predictive modeling, and live pick feeds built for professional handicappers." },
-      { property: "og:title", content: "Sportshandicapper — Betting Intelligence At Scale" },
+      { property: "og:title", content: "Sportshandicapper | Betting Intelligence At Scale" },
       { property: "og:description", content: "Pro sports analytics, predictive modeling, and live pick feeds." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
