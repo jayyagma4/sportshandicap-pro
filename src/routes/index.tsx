@@ -369,7 +369,7 @@ function PremiumPicks() {
             High-confidence releases.
           </h2>
           <p className="text-slate-400 mt-3 max-w-xl mx-auto">
-            Reserved for situations the model flags with confluence — line value, sharp money, situational edge.
+            Reserved for spots where the model finds real confluence: line value, sharp money, and a clear situational edge.
           </p>
         </div>
       </ScrollReveal>
