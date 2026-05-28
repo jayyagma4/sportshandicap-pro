@@ -20,6 +20,7 @@ import {
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Counter } from "@/components/Counter";
+import { TeamLogo, MatchupLogos, type League } from "@/components/TeamLogo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -170,13 +171,15 @@ function Scoreboard() {
         ].map((g) => (
           <div key={g.a} className="px-5 py-4 hover:bg-white/[0.02] transition">
             <div className="flex items-center justify-between mb-2.5">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <span className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] font-bold tracking-widest text-slate-400">
                   {g.lg}
                 </span>
-                <span className="font-bold text-white text-sm">
-                  {g.a} <span className="text-slate-600">vs</span> {g.b}
-                </span>
+                <TeamLogo league={g.lg as League} team={g.a} size={20} />
+                <span className="font-bold text-white text-sm">{g.a}</span>
+                <span className="text-slate-600 text-xs">vs</span>
+                <TeamLogo league={g.lg as League} team={g.b} size={20} />
+                <span className="font-bold text-white text-sm">{g.b}</span>
               </div>
               <span className="text-[10px] font-mono text-emerald-400 font-bold">{g.ev} EV</span>
             </div>
@@ -316,8 +319,16 @@ function TodaysBoard() {
                   {row.league}
                 </span>
               </div>
-              <div>
-                <div className="text-sm font-bold text-white">{row.matchup}</div>
+              <div className="min-w-0">
+                <div className="text-sm font-bold text-white flex items-center gap-2">
+                  <MatchupLogos
+                    league={row.league as League}
+                    a={row.matchup.split(" vs ")[0]}
+                    b={row.matchup.split(" vs ")[1]}
+                    size={22}
+                  />
+                  <span className="truncate">{row.matchup}</span>
+                </div>
                 <div className="text-[10px] text-slate-500 font-mono mt-0.5">
                   {row.time} · {row.book}
                 </div>
@@ -377,9 +388,9 @@ function PremiumPicks() {
 
       <div className="grid md:grid-cols-3 gap-5">
         {[
-          { tag: "10★ WHALE", match: "Yankees vs Red Sox", pick: "NYY ML", conf: 94, edge: "+8.2%", rec: "12-3 L15" },
-          { tag: "8★ STRONG", match: "Celtics vs Heat", pick: "BOS -5.5", conf: 87, edge: "+5.4%", rec: "9-4 L13" },
-          { tag: "7★ LEAN", match: "Oilers vs Kings", pick: "Under 6", conf: 79, edge: "+3.6%", rec: "8-5 L13" },
+          { league: "MLB" as League, tag: "10★ WHALE", match: "Yankees vs Red Sox", pick: "NYY ML", conf: 94, edge: "+8.2%", rec: "12-3 L15" },
+          { league: "NBA" as League, tag: "8★ STRONG", match: "Celtics vs Heat", pick: "BOS -5.5", conf: 87, edge: "+5.4%", rec: "9-4 L13" },
+          { league: "NHL" as League, tag: "7★ LEAN", match: "Oilers vs Kings", pick: "Under 6", conf: 79, edge: "+3.6%", rec: "8-5 L13" },
         ].map((p, i) => (
           <ScrollReveal key={p.match} delay={i * 100}>
             <div className="card-premium p-6 relative">
@@ -390,7 +401,10 @@ function PremiumPicks() {
                 <span className="text-[10px] font-mono text-slate-500">{p.rec}</span>
               </div>
 
-              <h3 className="text-xl font-black text-white">{p.match}</h3>
+              <div className="flex items-center gap-3">
+                <MatchupLogos league={p.league} a={p.match.split(" vs ")[0]} b={p.match.split(" vs ")[1]} size={32} />
+                <h3 className="text-xl font-black text-white">{p.match}</h3>
+              </div>
 
               <div className="mt-5 grid grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/10 bg-black/30 p-3">
