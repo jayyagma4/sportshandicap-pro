@@ -171,13 +171,15 @@ function Scoreboard() {
         ].map((g) => (
           <div key={g.a} className="px-5 py-4 hover:bg-white/[0.02] transition">
             <div className="flex items-center justify-between mb-2.5">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <span className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] font-bold tracking-widest text-slate-400">
                   {g.lg}
                 </span>
-                <span className="font-bold text-white text-sm">
-                  {g.a} <span className="text-slate-600">vs</span> {g.b}
-                </span>
+                <TeamLogo league={g.lg as League} team={g.a} size={20} />
+                <span className="font-bold text-white text-sm">{g.a}</span>
+                <span className="text-slate-600 text-xs">vs</span>
+                <TeamLogo league={g.lg as League} team={g.b} size={20} />
+                <span className="font-bold text-white text-sm">{g.b}</span>
               </div>
               <span className="text-[10px] font-mono text-emerald-400 font-bold">{g.ev} EV</span>
             </div>
