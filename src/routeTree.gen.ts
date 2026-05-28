@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PicksRouteImport } from './routes/picks'
 import { Route as PackagesRouteImport } from './routes/packages'
+import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PicksRoute = PicksRouteImport.update({
@@ -23,6 +24,11 @@ const PackagesRoute = PackagesRouteImport.update({
   path: '/packages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticlesRoute = ArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/articles': typeof ArticlesRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/articles': typeof ArticlesRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/articles': typeof ArticlesRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/packages' | '/picks'
+  fullPaths: '/' | '/articles' | '/packages' | '/picks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/packages' | '/picks'
-  id: '__root__' | '/' | '/packages' | '/picks'
+  to: '/' | '/articles' | '/packages' | '/picks'
+  id: '__root__' | '/' | '/articles' | '/packages' | '/picks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ArticlesRoute: typeof ArticlesRoute
   PackagesRoute: typeof PackagesRoute
   PicksRoute: typeof PicksRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/articles': {
+      id: '/articles'
+      path: '/articles'
+      fullPath: '/articles'
+      preLoaderRoute: typeof ArticlesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ArticlesRoute: ArticlesRoute,
   PackagesRoute: PackagesRoute,
   PicksRoute: PicksRoute,
 }
