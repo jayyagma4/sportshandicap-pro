@@ -148,7 +148,13 @@ function PicksPage() {
               </div>
               <div className="min-w-0">
                 <div className="text-sm font-bold text-white truncate flex items-center gap-2">
-                  {p.matchup}
+                  <MatchupLogos
+                    league={p.sport as League}
+                    a={p.matchup.split(" vs ")[0]}
+                    b={p.matchup.split(" vs ")[1]}
+                    size={22}
+                  />
+                  <span className="truncate">{p.matchup}</span>
                   {p.whale && (
                     <span className="px-1.5 py-0.5 rounded bg-amber-400/10 border border-amber-400/30 text-amber-300 text-[9px] font-black tracking-widest">
                       WHALE
