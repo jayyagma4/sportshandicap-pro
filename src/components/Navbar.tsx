@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BarChart3, ChevronDown, ArrowRight } from "lucide-react";
-import { Logo } from "./Logo";
+import logo from "@/assets/logo.png";
 import { AuthModal, type AuthMode } from "./AuthModal";
 
 export function Navbar() {
@@ -23,7 +23,7 @@ export function Navbar() {
           style={{ boxShadow: "0 10px 40px -10px rgba(99,102,241,0.25)" }}
         >
           <Link to="/" className="flex items-center gap-2" aria-label="Sportshandicapper home">
-            <Logo height={40} />
+            <img src={logo} alt="Sportshandicapper" className="h-10 w-auto" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-1 rounded-full bg-white/[0.02] px-2 py-1.5 border border-white/5">
