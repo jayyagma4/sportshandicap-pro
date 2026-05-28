@@ -14,7 +14,10 @@ import {
   Clock,
   ChevronRight,
   Star,
+  Gift,
+  Crown,
 } from "lucide-react";
+
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Counter } from "@/components/Counter";
 
@@ -482,67 +485,175 @@ function Leaderboard() {
 
 /* ------------------------------ PACKAGES ------------------------------ */
 
-const packages = [
-  { name: "1 Week", price: "$24.99", period: "/ week", features: ["1 Week Access", "1, 2★ Picks", "24/7 Support", "Expert Analysis"] },
+type LandingTier = {
+  rank: string;
+  name: string;
+  price: string;
+  period: string;
+  tag: string;
+  features: string[];
+  icon: typeof Gift;
+  featured?: boolean;
+  cta: string;
+};
+
+const landingTiers: LandingTier[] = [
   {
-    name: "1 Month",
+    rank: "00",
+    name: "Free Trial",
+    price: "FREE",
+    period: "7 days",
+    tag: "Start free",
+    icon: Gift,
+    features: ["1 Week Access", "1 star Picks", "24/7 Support", "No card required"],
+    cta: "Start Free Trial",
+  },
+  {
+    rank: "03",
+    name: "Standard",
     price: "$99.99",
     period: "/ month",
-    popular: true,
-    features: ["1 Month Access", "1, 2, 3, 4★ Picks", "Whale plays preview", "Pro Discord"],
+    tag: "Most Popular",
+    icon: Trophy,
+    featured: true,
+    features: ["1 Month Access", "1, 2, 3, 4 star Picks", "Live alerts and Discord", "Whale plays preview"],
+    cta: "Get Standard",
   },
-  { name: "6 Month", price: "$299.99", period: "/ 6mo", features: ["6 Month Access", "1–10★ Picks", "1:1 strategy call", "Private model alerts"] },
+  {
+    rank: "07",
+    name: "Whale",
+    price: "$999.99",
+    period: "/ year",
+    tag: "Ultimate Access",
+    icon: Crown,
+    features: ["1 Year Access", "Every star tier unlocked", "10 star Whale picks", "1:1 strategy call"],
+    cta: "Become a Whale",
+  },
 ];
-
 
 function Packages() {
   return (
     <section className="container-x py-20" id="packages">
       <ScrollReveal>
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 max-w-2xl mx-auto">
           <div className="eyebrow text-[#1E90FF] mb-2">Membership</div>
-          <h2 className="text-4xl md:text-5xl font-black text-white">Built for serious bettors.</h2>
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+            Built for serious <span className="text-[#1E90FF]">bettors</span>.
+          </h2>
+          <p className="mt-4 text-sm text-slate-400">
+            Three ways in. Try it free, run the season, or own the year.
+          </p>
         </div>
       </ScrollReveal>
 
-      <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
-        {packages.map((p, i) => (
-          <ScrollReveal key={p.name} delay={i * 100}>
-            <div className={`card-premium p-7 h-full flex flex-col relative ${p.popular ? "border-[#1E90FF]/50" : ""}`}>
-              {p.popular && (
-                <div className="absolute -top-2.5 left-6 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded bg-[#1E90FF] text-white">
-                  Most Picked
+      <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto items-stretch">
+        {landingTiers.map((t, i) => {
+          const Icon = t.icon;
+          return (
+            <ScrollReveal key={t.name} delay={i * 100}>
+              <div
+                className={`relative h-full flex flex-col rounded-md border bg-black/30 overflow-hidden transition ${
+                  t.featured
+                    ? "border-[#1E90FF]/50 md:scale-[1.03] md:shadow-[0_0_40px_-12px_rgba(30,144,255,0.4)]"
+                    : "border-white/10 hover:border-white/20"
+                }`}
+              >
+                <div
+                  className={`absolute top-0 left-0 right-0 h-px ${
+                    t.featured ? "bg-[#1E90FF]" : "bg-[#1E90FF]/30"
+                  }`}
+                />
+                {t.featured && (
+                  <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest rounded bg-[#1E90FF] text-white whitespace-nowrap">
+                    {t.tag}
+                  </div>
+                )}
+
+                <div className="p-7 flex-1 flex flex-col">
+                  <div className="flex items-center justify-between">
+                    <div
+                      className={`h-10 w-10 rounded flex items-center justify-center border ${
+                        t.featured
+                          ? "bg-[#1E90FF]/15 border-[#1E90FF]/50"
+                          : "bg-white/[0.03] border-white/10"
+                      }`}
+                    >
+                      <Icon className={`h-4 w-4 ${t.featured ? "text-[#1E90FF]" : "text-slate-300"}`} />
+                    </div>
+                    <div className="text-2xl font-black font-mono text-white/10 leading-none">
+                      {t.rank}
+                    </div>
+                  </div>
+
+                  <div className="mt-5">
+                    {!t.featured && (
+                      <div className="text-[10px] uppercase tracking-widest font-bold text-[#1E90FF]">
+                        {t.tag}
+                      </div>
+                    )}
+                    <h3 className="mt-1 text-xl font-black text-white tracking-tight">
+                      {t.name}
+                    </h3>
+                  </div>
+
+                  <div className="mt-4 flex items-baseline gap-1.5">
+                    <span
+                      className={`text-4xl font-black font-mono leading-none ${
+                        t.price === "FREE" ? "text-[#1E90FF]" : "text-white"
+                      }`}
+                    >
+                      {t.price}
+                    </span>
+                    <span className="text-slate-500 text-xs uppercase tracking-widest font-bold">
+                      {t.period}
+                    </span>
+                  </div>
+
+                  <div className="my-5 h-px bg-white/5" />
+
+                  <ul className="space-y-2.5 flex-1">
+                    {t.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm text-slate-200">
+                        <Check
+                          className={`h-4 w-4 mt-0.5 flex-shrink-0 ${
+                            t.featured ? "text-[#1E90FF]" : "text-[#1E90FF]/70"
+                          }`}
+                        />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    className={`mt-6 w-full ${t.featured ? "btn-primary" : "btn-secondary"}`}
+                  >
+                    {t.cta} <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
-              )}
-              <h3 className="text-lg font-bold text-white">{p.name}</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-4xl font-black text-white font-mono">{p.price}</span>
-                <span className="text-slate-500 text-sm">{p.period}</span>
               </div>
-              <ul className="mt-6 space-y-2.5 flex-1">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-slate-300">
-                    <Check className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <button className={`mt-6 ${p.popular ? "btn-primary" : "btn-secondary"} w-full`}>
-                Get started
-              </button>
-            </div>
-          </ScrollReveal>
-        ))}
+            </ScrollReveal>
+          );
+        })}
       </div>
 
-      <div className="mt-8 text-center">
-        <Link to="/packages" className="text-sm font-semibold text-cyan-300 hover:text-white">
-          Compare all plans →
-        </Link>
-      </div>
+      <ScrollReveal delay={200}>
+        <div className="mt-10 flex flex-col items-center gap-2">
+          <Link
+            to="/packages"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-[#1E90FF]/40 bg-[#1E90FF]/5 text-sm font-bold text-white hover:bg-[#1E90FF]/15 hover:border-[#1E90FF] transition"
+          >
+            Compare all 8 plans
+            <ArrowRight className="h-4 w-4 text-[#1E90FF] group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+          <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+            5 more tiers on the full board
+          </div>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }
+
 
 /* ------------------------------ TOOLS ------------------------------ */
 
