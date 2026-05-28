@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Lock, ChevronLeft, ChevronRight, ArrowRight, Clock, Target } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { MatchupLogos, type League } from "@/components/TeamLogo";
 
 export const Route = createFileRoute("/picks")({
   head: () => ({
