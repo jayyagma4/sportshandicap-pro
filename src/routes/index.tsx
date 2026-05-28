@@ -20,7 +20,7 @@ import {
 
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Counter } from "@/components/Counter";
-import { TeamLogo, MatchupLogos } from "@/components/TeamLogo";
+import { TeamLogo, MatchupLogos, type League } from "@/components/TeamLogo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
