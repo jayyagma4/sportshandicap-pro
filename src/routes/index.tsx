@@ -667,14 +667,39 @@ function FinalCta() {
                 </span>
               </div>
 
-              <h2 className="text-5xl md:text-7xl font-black text-white leading-[0.92] tracking-tight">
+              <h2 className="text-5xl md:text-7xl font-black text-white leading-[0.95] tracking-tight">
                 Stop guessing.
                 <br />
-                <span className="relative inline-block">
-                  <span className="text-[#1E90FF]">Start grading.</span>
-                  <span className="absolute -bottom-2 left-0 right-0 h-1 bg-[#1E90FF]/60" />
+                <span className="relative inline-block pr-2">
+                  {/* Sprinting "Start" — ghost trails behind, italic skew forward */}
+                  <span className="relative inline-block align-baseline mr-2">
+                    <span aria-hidden className="absolute inset-0 -translate-x-3 italic skew-x-[-12deg] text-[#1E90FF]/15 select-none">
+                      Start
+                    </span>
+                    <span aria-hidden className="absolute inset-0 -translate-x-1.5 italic skew-x-[-12deg] text-[#1E90FF]/30 select-none">
+                      Start
+                    </span>
+                    <span className="relative italic skew-x-[-12deg] text-[#1E90FF] inline-block">
+                      Start
+                    </span>
+                  </span>
+                  <span className="text-[#1E90FF]">grading.</span>
+
+                  {/* Animated speed-line underline */}
+                  <span className="absolute -bottom-2 left-0 right-0 h-[3px] overflow-hidden rounded-full bg-[#1E90FF]/15">
+                    <span className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-[#1E90FF] to-transparent sprint-bar" />
+                  </span>
                 </span>
               </h2>
+
+              <style>{`
+                @keyframes sprintBar {
+                  0% { transform: translateX(-110%); }
+                  100% { transform: translateX(330%); }
+                }
+                .sprint-bar { animation: sprintBar 2.4s cubic-bezier(.6,.05,.3,1) infinite; }
+              `}</style>
+
 
               <p className="mt-7 text-base md:text-lg text-slate-400 max-w-lg leading-relaxed">
                 Verified picks across every major sport, posted before the line moves. No hype,
