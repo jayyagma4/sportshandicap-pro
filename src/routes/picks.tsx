@@ -152,8 +152,8 @@ function PicksPage() {
               </h1>
 
               <p className="mt-5 text-lg text-slate-400 max-w-xl">
-                Timestamped before lines move. Graded after the final whistle. Every play tracked, every
-                edge documented — no rewriting history.
+                Timestamped before lines move. Graded after the final whistle. Every play tracked and
+                every edge documented. No rewriting history.
               </p>
 
               {/* mini stats strip */}
