@@ -623,46 +623,29 @@ function Testimonials() {
 
 function FinalCta() {
   return (
-    <section className="container-x py-20">
+    <section className="container-x py-24">
       <ScrollReveal>
-        <div className="card-premium relative overflow-hidden">
-          {/* Top scoreboard bar */}
-          <div className="flex items-center justify-between px-5 py-2.5 border-b border-white/10 bg-black/50 relative z-10">
-            <div className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 ping-soft" />
-              <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-300">
-                Game Time
-              </span>
-            </div>
-            <div className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-slate-500">
-              <span>Q4</span>
-              <span className="text-slate-700">·</span>
-              <span className="text-[#1E90FF]">00:12</span>
-            </div>
-          </div>
-
-          {/* Field-line backdrop */}
+        <div className="relative">
+          {/* Lane-line backdrop (very subtle, like a track) */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-[0.07]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(90deg, transparent 0 79px, rgba(255,255,255,0.6) 79px 80px)",
-            }}
+            aria-hidden
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-white/5"
           />
-          {/* Diagonal speed lines */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(115deg, transparent 0 14px, rgba(30,144,255,0.8) 14px 15px)",
-            }}
+            aria-hidden
+            className="absolute inset-x-0 top-1/2 translate-y-6 h-px bg-white/[0.04]"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-1/2 -translate-y-12 h-px bg-white/[0.04]"
           />
 
-          <div className="relative px-6 md:px-12 py-14 md:py-20 grid lg:grid-cols-[1.4fr_1fr] gap-12 items-center">
-            {/* LEFT — message */}
+          <div className="relative grid lg:grid-cols-[1.5fr_1fr] gap-16 items-center">
+            {/* LEFT */}
             <div>
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded border border-[#1E90FF]/40 bg-[#1E90FF]/10 mb-5">
-                <span className="text-[10px] uppercase tracking-[0.22em] font-black text-[#1E90FF]">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="h-px w-10 bg-[#1E90FF]" />
+                <span className="text-[10px] uppercase tracking-[0.28em] font-black text-[#1E90FF]">
                   Join the edge
                 </span>
               </div>
@@ -670,43 +653,21 @@ function FinalCta() {
               <h2 className="text-5xl md:text-7xl font-black text-white leading-[0.95] tracking-tight">
                 Stop guessing.
                 <br />
-                <span className="relative inline-block pr-2">
-                  {/* Sprinting "Start" — ghost trails behind, italic skew forward */}
-                  <span className="relative inline-block align-baseline mr-2">
-                    <span aria-hidden className="absolute inset-0 -translate-x-3 italic skew-x-[-12deg] text-[#1E90FF]/15 select-none">
-                      Start
-                    </span>
-                    <span aria-hidden className="absolute inset-0 -translate-x-1.5 italic skew-x-[-12deg] text-[#1E90FF]/30 select-none">
-                      Start
-                    </span>
-                    <span className="relative italic skew-x-[-12deg] text-[#1E90FF] inline-block">
-                      Start
-                    </span>
-                  </span>
-                  <span className="text-[#1E90FF]">grading.</span>
-
-                  {/* Animated speed-line underline */}
-                  <span className="absolute -bottom-2 left-0 right-0 h-[3px] overflow-hidden rounded-full bg-[#1E90FF]/15">
-                    <span className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-[#1E90FF] to-transparent sprint-bar" />
-                  </span>
+                <span className="relative inline-block">
+                  <span className="text-[#1E90FF]">Start grading.</span>
+                  {/* Running lane underline with a sprint dot */}
+                  <span aria-hidden className="absolute -bottom-3 left-0 right-0 h-px bg-[#1E90FF]/25" />
+                  <span aria-hidden className="absolute -bottom-3 left-0 h-px bg-[#1E90FF] sprint-line" />
+                  <span aria-hidden className="absolute -bottom-[7px] left-0 h-2 w-2 rounded-full bg-[#1E90FF] shadow-[0_0_12px_rgba(30,144,255,0.9)] sprint-dot" />
                 </span>
               </h2>
 
-              <style>{`
-                @keyframes sprintBar {
-                  0% { transform: translateX(-110%); }
-                  100% { transform: translateX(330%); }
-                }
-                .sprint-bar { animation: sprintBar 2.4s cubic-bezier(.6,.05,.3,1) infinite; }
-              `}</style>
-
-
-              <p className="mt-7 text-base md:text-lg text-slate-400 max-w-lg leading-relaxed">
+              <p className="mt-8 text-base md:text-lg text-slate-400 max-w-lg leading-relaxed">
                 Verified picks across every major sport, posted before the line moves. No hype,
                 just receipts.
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-9 flex flex-wrap items-center gap-3">
                 <Link to="/packages" className="btn-primary">
                   Become a Member <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -715,7 +676,7 @@ function FinalCta() {
                 </Link>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-slate-500">
+              <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-3 text-xs text-slate-500">
                 <div className="flex items-center gap-2">
                   <Trophy className="h-3.5 w-3.5 text-amber-300" />
                   3-yr verified record
@@ -731,41 +692,50 @@ function FinalCta() {
               </div>
             </div>
 
-            {/* RIGHT — scoreboard stats */}
-            <div className="relative">
-              <div className="rounded-lg border border-white/10 bg-black/60 overflow-hidden relative z-10">
-                <div className="grid grid-cols-3 divide-x divide-white/10">
-                  {[
-                    { v: "67", l: "Hit %", c: "text-emerald-400" },
-                    { v: "184", l: "Units", c: "text-[#1E90FF]" },
-                    { v: "12", l: "ROI %", c: "text-amber-300" },
-                  ].map((s) => (
-                    <div key={s.l} className="px-4 py-6 text-center">
-                      <div className={`text-5xl md:text-6xl font-black font-mono leading-none ${s.c}`}>
-                        {s.v}
-                      </div>
-                      <div className="mt-2 text-[9px] uppercase tracking-[0.2em] font-bold text-slate-500">
-                        {s.l}
-                      </div>
+            {/* RIGHT — quiet stat column */}
+            <div className="relative lg:pl-10 lg:border-l lg:border-white/10">
+              <div className="space-y-7">
+                {[
+                  { v: "67.4", s: "%", l: "30-day hit rate", c: "text-emerald-400" },
+                  { v: "+184", s: "u", l: "YTD profit", c: "text-[#1E90FF]" },
+                  { v: "12.8", s: "%", l: "Return on investment", c: "text-amber-300" },
+                ].map((s) => (
+                  <div key={s.l} className="flex items-baseline justify-between gap-4">
+                    <div className="text-[10px] uppercase tracking-[0.22em] font-bold text-slate-500">
+                      {s.l}
                     </div>
-                  ))}
-                </div>
-                <div className="px-5 py-3 border-t border-white/10 bg-black/40 flex items-center justify-between">
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-slate-500">
-                    Season Stats
-                  </span>
-                  <span className="text-[10px] font-mono text-[#1E90FF] font-bold">
-                    ▲ TRENDING
-                  </span>
-                </div>
-              </div>
-
-              {/* Big jersey number behind */}
-              <div className="pointer-events-none absolute -top-8 -right-2 text-[160px] font-black text-white/[0.04] leading-none select-none font-mono">
-                01
+                    <div className={`text-4xl md:text-5xl font-black font-mono leading-none ${s.c}`}>
+                      {s.v}
+                      <span className="text-xl text-slate-500 ml-0.5">{s.s}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
+
+          <style>{`
+            @keyframes sprintLine {
+              0% { width: 0; opacity: 0; }
+              25% { opacity: 1; }
+              90% { width: 100%; opacity: 1; }
+              100% { width: 100%; opacity: 0; }
+            }
+            @keyframes sprintDot {
+              0% { transform: translateX(0); opacity: 0; }
+              15% { opacity: 1; }
+              90% { transform: translateX(var(--w, 0px)); opacity: 1; }
+              100% { transform: translateX(var(--w, 0px)); opacity: 0; }
+            }
+            .sprint-line { animation: sprintLine 3.2s cubic-bezier(.5,.05,.2,1) infinite; }
+            .sprint-dot {
+              animation: sprintDot 3.2s cubic-bezier(.5,.05,.2,1) infinite;
+              left: 0;
+              right: auto;
+              width: 8px;
+            }
+            .relative:has(> .sprint-dot) { }
+          `}</style>
         </div>
       </ScrollReveal>
     </section>
