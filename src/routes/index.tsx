@@ -625,35 +625,120 @@ function FinalCta() {
   return (
     <section className="container-x py-20">
       <ScrollReveal>
-        <div className="card-premium p-10 md:p-14 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-px bg-[#1E90FF]/40" />
-          <div className="eyebrow text-[#1E90FF] mb-3">Join the edge</div>
-          <h2 className="text-4xl md:text-6xl font-black text-white max-w-3xl mx-auto leading-tight">
-            Stop guessing. Start grading.
-          </h2>
-          <p className="mt-5 text-slate-400 max-w-xl mx-auto">
-            Get verified picks across every major sport, posted before the line moves. Cancel anytime.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link to="/packages" className="btn-primary">
-              Become a Member <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link to="/picks" className="btn-secondary">
-              Browse free picks
-            </Link>
+        <div className="card-premium relative overflow-hidden">
+          {/* Top scoreboard bar */}
+          <div className="flex items-center justify-between px-5 py-2.5 border-b border-white/10 bg-black/50 relative z-10">
+            <div className="flex items-center gap-2">
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 ping-soft" />
+              <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-300">
+                Game Time
+              </span>
+            </div>
+            <div className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-widest text-slate-500">
+              <span>Q4</span>
+              <span className="text-slate-700">·</span>
+              <span className="text-[#1E90FF]">00:12</span>
+            </div>
           </div>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500">
-            <div className="flex items-center gap-2">
-              <Trophy className="h-3.5 w-3.5 text-amber-300" />
-              3-yr verified record
+
+          {/* Field-line backdrop */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(90deg, transparent 0 79px, rgba(255,255,255,0.6) 79px 80px)",
+            }}
+          />
+          {/* Diagonal speed lines */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(115deg, transparent 0 14px, rgba(30,144,255,0.8) 14px 15px)",
+            }}
+          />
+
+          <div className="relative px-6 md:px-12 py-14 md:py-20 grid lg:grid-cols-[1.4fr_1fr] gap-12 items-center">
+            {/* LEFT — message */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded border border-[#1E90FF]/40 bg-[#1E90FF]/10 mb-5">
+                <span className="text-[10px] uppercase tracking-[0.22em] font-black text-[#1E90FF]">
+                  Join the edge
+                </span>
+              </div>
+
+              <h2 className="text-5xl md:text-7xl font-black text-white leading-[0.92] tracking-tight">
+                Stop guessing.
+                <br />
+                <span className="relative inline-block">
+                  <span className="text-[#1E90FF]">Start grading.</span>
+                  <span className="absolute -bottom-2 left-0 right-0 h-1 bg-[#1E90FF]/60" />
+                </span>
+              </h2>
+
+              <p className="mt-7 text-base md:text-lg text-slate-400 max-w-lg leading-relaxed">
+                Verified picks across every major sport, posted before the line moves. No hype,
+                just receipts.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link to="/packages" className="btn-primary">
+                  Become a Member <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link to="/picks" className="btn-secondary">
+                  Browse free picks
+                </Link>
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-slate-500">
+                <div className="flex items-center gap-2">
+                  <Trophy className="h-3.5 w-3.5 text-amber-300" />
+                  3-yr verified record
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                  Cancel anytime
+                </div>
+                <div className="flex items-center gap-2">
+                  <Activity className="h-3.5 w-3.5 text-cyan-300" />
+                  6 sports covered
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-              Cancel anytime
-            </div>
-            <div className="flex items-center gap-2">
-              <Activity className="h-3.5 w-3.5 text-cyan-300" />
-              6 sports covered
+
+            {/* RIGHT — scoreboard stats */}
+            <div className="relative">
+              <div className="rounded-lg border border-white/10 bg-black/60 overflow-hidden relative z-10">
+                <div className="grid grid-cols-3 divide-x divide-white/10">
+                  {[
+                    { v: "67", l: "Hit %", c: "text-emerald-400" },
+                    { v: "184", l: "Units", c: "text-[#1E90FF]" },
+                    { v: "12", l: "ROI %", c: "text-amber-300" },
+                  ].map((s) => (
+                    <div key={s.l} className="px-4 py-6 text-center">
+                      <div className={`text-5xl md:text-6xl font-black font-mono leading-none ${s.c}`}>
+                        {s.v}
+                      </div>
+                      <div className="mt-2 text-[9px] uppercase tracking-[0.2em] font-bold text-slate-500">
+                        {s.l}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="px-5 py-3 border-t border-white/10 bg-black/40 flex items-center justify-between">
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-slate-500">
+                    Season Stats
+                  </span>
+                  <span className="text-[10px] font-mono text-[#1E90FF] font-bold">
+                    ▲ TRENDING
+                  </span>
+                </div>
+              </div>
+
+              {/* Big jersey number behind */}
+              <div className="pointer-events-none absolute -top-8 -right-2 text-[160px] font-black text-white/[0.04] leading-none select-none font-mono">
+                01
+              </div>
             </div>
           </div>
         </div>
