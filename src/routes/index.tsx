@@ -21,13 +21,13 @@ import { Counter } from "@/components/Counter";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sportshandicapper — Verified Picks & Sharp Analytics" },
+      { title: "Sportshandicapper | Verified Picks & Sharp Analytics" },
       {
         name: "description",
         content:
           "Timestamped expert picks, verified records, and institutional sports analytics across MLB, NBA, NFL, NHL, CFB and CBB.",
       },
-      { property: "og:title", content: "Sportshandicapper — Verified Picks & Sharp Analytics" },
+      { property: "og:title", content: "Sportshandicapper | Verified Picks & Sharp Analytics" },
       {
         property: "og:description",
         content: "Timestamped expert picks, verified records, and live sharp analytics.",
@@ -110,7 +110,7 @@ function Hero() {
 
           <p className="mt-6 text-lg text-slate-400 max-w-xl leading-relaxed">
             We don't sell hype. Every pick is timestamped before line move, posted with reasoning,
-            and graded after the final whistle — across MLB, NBA, NFL, NHL, CFB and CBB.
+            and graded after the final whistle. Coverage spans MLB, NBA, NFL, NHL, CFB and CBB.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -369,7 +369,7 @@ function PremiumPicks() {
             High-confidence releases.
           </h2>
           <p className="text-slate-400 mt-3 max-w-xl mx-auto">
-            Reserved for situations the model flags with confluence — line value, sharp money, situational edge.
+            Reserved for spots where the model finds real confluence: line value, sharp money, and a clear situational edge.
           </p>
         </div>
       </ScrollReveal>
@@ -584,7 +584,7 @@ function Tools() {
 /* --------------------------- TESTIMONIALS --------------------------- */
 
 const reviews = [
-  { name: "Jordan T.", role: "Member · 2 yrs", text: "The picks are graded openly — wins AND losses. That alone separates them from every other service." },
+  { name: "Jordan T.", role: "Member · 2 yrs", text: "The picks are graded openly, wins and losses both. That alone separates them from every other service." },
   { name: "Alex M.", role: "Member · 1 yr", text: "Up 62 units last quarter following the MLB board. Posting times are pre-line move, which matters." },
   { name: "Chris P.", role: "Member · 8 mo", text: "Discord community + transparent records. Feels like a sharp sportsbook, not a hype shop." },
 ];

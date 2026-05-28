@@ -6,9 +6,9 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 export const Route = createFileRoute("/picks")({
   head: () => ({
     meta: [
-      { title: "Expert Picks — Sportshandicapper" },
-      { name: "description", content: "Today's expert betting picks across NBA, NFL, NHL, MLB, NCAAF, and NCAAB — timestamped before lines move, graded after the final whistle." },
-      { property: "og:title", content: "Expert Picks — Sportshandicapper" },
+      { title: "Expert Picks | Sportshandicapper" },
+      { name: "description", content: "Today's expert betting picks across NBA, NFL, NHL, MLB, NCAAF, and NCAAB. Timestamped before lines move, graded after the final whistle." },
+      { property: "og:title", content: "Expert Picks | Sportshandicapper" },
       { property: "og:description", content: "Today's expert betting picks across all major leagues." },
     ],
   }),
@@ -152,8 +152,8 @@ function PicksPage() {
               </h1>
 
               <p className="mt-5 text-lg text-slate-400 max-w-xl">
-                Timestamped before lines move. Graded after the final whistle. Every play tracked, every
-                edge documented — no rewriting history.
+                Timestamped before lines move. Graded after the final whistle. Every play tracked and
+                every edge documented. No rewriting history.
               </p>
 
               {/* mini stats strip */}

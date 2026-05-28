@@ -5,9 +5,9 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 export const Route = createFileRoute("/packages")({
   head: () => ({
     meta: [
-      { title: "Packages — Sportshandicapper" },
+      { title: "Packages | Sportshandicapper" },
       { name: "description", content: "Pick your edge. Transparent unit tracking, full pick history, and verified results across all plans." },
-      { property: "og:title", content: "Packages — Sportshandicapper" },
+      { property: "og:title", content: "Packages | Sportshandicapper" },
       { property: "og:description", content: "Pricing plans for handicappers. Free trial, weekly, monthly, premium season." },
     ],
   }),

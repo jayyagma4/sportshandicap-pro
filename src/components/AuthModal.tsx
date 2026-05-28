@@ -92,7 +92,7 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
               </h2>
               <p className="mt-4 text-slate-400 text-sm leading-relaxed max-w-sm">
                 Join thousands of bettors winning with timestamped, graded picks from verified
-                handicappers — across every major league.
+                handicappers across every major league.
               </p>
             </div>
           </div>
@@ -141,7 +141,7 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
             <p className="mt-1.5 text-sm text-slate-400">
               {isLogin
                 ? "Access today's picks and your tracked bankroll."
-                : "Start with a free trial — cancel anytime."}
+                : "Start with a free trial. Cancel anytime."}
             </p>
           </div>
 
