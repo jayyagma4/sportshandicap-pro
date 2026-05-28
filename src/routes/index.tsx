@@ -44,15 +44,13 @@ function Home() {
       <Hero />
       <RecordStrip />
       <TodaysBoard />
-      <PremiumPicks />
       <Leaderboard />
       <Packages />
-      <Tools />
-      <Testimonials />
       <FinalCta />
     </>
   );
 }
+
 
 /* ------------------------------ TICKER ------------------------------ */
 
