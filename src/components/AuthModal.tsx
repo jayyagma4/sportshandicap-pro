@@ -92,7 +92,7 @@ export function AuthModal({ open, mode, onClose, onModeChange }: AuthModalProps)
               </h2>
               <p className="mt-4 text-slate-400 text-sm leading-relaxed max-w-sm">
                 Join thousands of bettors winning with timestamped, graded picks from verified
-                handicappers — across every major league.
+                handicappers across every major league.
               </p>
             </div>
           </div>
