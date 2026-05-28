@@ -21,13 +21,13 @@ import { Counter } from "@/components/Counter";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sportshandicapper — Verified Picks & Sharp Analytics" },
+      { title: "Sportshandicapper | Verified Picks & Sharp Analytics" },
       {
         name: "description",
         content:
           "Timestamped expert picks, verified records, and institutional sports analytics across MLB, NBA, NFL, NHL, CFB and CBB.",
       },
-      { property: "og:title", content: "Sportshandicapper — Verified Picks & Sharp Analytics" },
+      { property: "og:title", content: "Sportshandicapper | Verified Picks & Sharp Analytics" },
       {
         property: "og:description",
         content: "Timestamped expert picks, verified records, and live sharp analytics.",
