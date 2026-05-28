@@ -483,16 +483,17 @@ function Leaderboard() {
 /* ------------------------------ PACKAGES ------------------------------ */
 
 const packages = [
-  { name: "Day Pass", price: "$9.99", period: "/ 24h", features: ["All picks today", "Live updates", "Email alerts"] },
+  { name: "1 Week", price: "$24.99", period: "/ week", features: ["1 Week Access", "1, 2★ Picks", "24/7 Support", "Expert Analysis"] },
   {
-    name: "Monthly Pro",
+    name: "1 Month",
     price: "$99.99",
     period: "/ month",
     popular: true,
-    features: ["All picks · all sports", "Whale plays", "Live odds & alerts", "Pro Discord"],
+    features: ["1 Month Access", "1, 2, 3, 4★ Picks", "Whale plays preview", "Pro Discord"],
   },
-  { name: "Season Pass", price: "$299.99", period: "/ 6mo", features: ["Everything in Pro", "1:1 strategy call", "Private model alerts", "Save 50%"] },
+  { name: "6 Month", price: "$299.99", period: "/ 6mo", features: ["6 Month Access", "1–10★ Picks", "1:1 strategy call", "Private model alerts"] },
 ];
+
 
 function Packages() {
   return (
