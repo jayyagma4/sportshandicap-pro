@@ -319,8 +319,16 @@ function TodaysBoard() {
                   {row.league}
                 </span>
               </div>
-              <div>
-                <div className="text-sm font-bold text-white">{row.matchup}</div>
+              <div className="min-w-0">
+                <div className="text-sm font-bold text-white flex items-center gap-2">
+                  <MatchupLogos
+                    league={row.league as League}
+                    a={row.matchup.split(" vs ")[0]}
+                    b={row.matchup.split(" vs ")[1]}
+                    size={22}
+                  />
+                  <span className="truncate">{row.matchup}</span>
+                </div>
                 <div className="text-[10px] text-slate-500 font-mono mt-0.5">
                   {row.time} · {row.book}
                 </div>
