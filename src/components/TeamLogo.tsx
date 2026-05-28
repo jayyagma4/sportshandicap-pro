@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type League = "MLB" | "NBA" | "NFL" | "NHL" | "NCAAF" | "NCAAB" | "CFB" | "CBB";
+export type League = "MLB" | "NBA" | "NFL" | "NHL" | "NCAAF" | "NCAAB" | "CFB" | "CBB";
 
 // Map team name OR abbreviation to ESPN abbreviation code by league.
 const TEAM_MAP: Record<string, Record<string, string>> = {
