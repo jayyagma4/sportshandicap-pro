@@ -110,7 +110,7 @@ function Hero() {
 
           <p className="mt-6 text-lg text-slate-400 max-w-xl leading-relaxed">
             We don't sell hype. Every pick is timestamped before line move, posted with reasoning,
-            and graded after the final whistle — across MLB, NBA, NFL, NHL, CFB and CBB.
+            and graded after the final whistle. Coverage spans MLB, NBA, NFL, NHL, CFB and CBB.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
