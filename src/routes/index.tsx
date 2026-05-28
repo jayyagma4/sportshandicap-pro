@@ -388,9 +388,9 @@ function PremiumPicks() {
 
       <div className="grid md:grid-cols-3 gap-5">
         {[
-          { tag: "10★ WHALE", match: "Yankees vs Red Sox", pick: "NYY ML", conf: 94, edge: "+8.2%", rec: "12-3 L15" },
-          { tag: "8★ STRONG", match: "Celtics vs Heat", pick: "BOS -5.5", conf: 87, edge: "+5.4%", rec: "9-4 L13" },
-          { tag: "7★ LEAN", match: "Oilers vs Kings", pick: "Under 6", conf: 79, edge: "+3.6%", rec: "8-5 L13" },
+          { league: "MLB" as League, tag: "10★ WHALE", match: "Yankees vs Red Sox", pick: "NYY ML", conf: 94, edge: "+8.2%", rec: "12-3 L15" },
+          { league: "NBA" as League, tag: "8★ STRONG", match: "Celtics vs Heat", pick: "BOS -5.5", conf: 87, edge: "+5.4%", rec: "9-4 L13" },
+          { league: "NHL" as League, tag: "7★ LEAN", match: "Oilers vs Kings", pick: "Under 6", conf: 79, edge: "+3.6%", rec: "8-5 L13" },
         ].map((p, i) => (
           <ScrollReveal key={p.match} delay={i * 100}>
             <div className="card-premium p-6 relative">
@@ -401,7 +401,10 @@ function PremiumPicks() {
                 <span className="text-[10px] font-mono text-slate-500">{p.rec}</span>
               </div>
 
-              <h3 className="text-xl font-black text-white">{p.match}</h3>
+              <div className="flex items-center gap-3">
+                <MatchupLogos league={p.league} a={p.match.split(" vs ")[0]} b={p.match.split(" vs ")[1]} size={32} />
+                <h3 className="text-xl font-black text-white">{p.match}</h3>
+              </div>
 
               <div className="mt-5 grid grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/10 bg-black/30 p-3">
