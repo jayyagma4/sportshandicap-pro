@@ -9,14 +9,14 @@ export function AuroraBackground() {
           backgroundImage: `url(${stadiumBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0.55,
+          opacity: 0.75,
         }}
       />
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(6,8,24,0.55) 0%, rgba(6,8,24,0.8) 60%, rgba(6,8,24,0.95) 100%)",
+            "linear-gradient(180deg, rgba(6,8,24,0.35) 0%, rgba(6,8,24,0.55) 60%, rgba(6,8,24,0.85) 100%)",
         }}
       />
       <div
