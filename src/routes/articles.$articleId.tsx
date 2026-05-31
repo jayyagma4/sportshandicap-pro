@@ -54,7 +54,7 @@ export const Route = createFileRoute("/articles/$articleId")({
 });
 
 function ArticleDetail() {
-  const { article } = Route.useLoaderData();
+  const { article } = Route.useLoaderData() as { article: Article };
   const related = articles.filter((a) => a.id !== article.id && a.league === article.league).slice(0, 3);
 
   return (
