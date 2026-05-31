@@ -4,7 +4,7 @@ import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { articles } from "@/data/articles";
 
-export const Route = createFileRoute("/articles")({
+export const Route = createFileRoute("/articles/")({
   head: () => ({
     meta: [
       { title: "Exclusive Articles | Sportshandicapper" },

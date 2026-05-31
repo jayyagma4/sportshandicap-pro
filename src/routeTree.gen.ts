@@ -11,8 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PicksRouteImport } from './routes/picks'
 import { Route as PackagesRouteImport } from './routes/packages'
-import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
 import { Route as ArticlesArticleIdRouteImport } from './routes/articles.$articleId'
 
 const PicksRoute = PicksRouteImport.update({
@@ -25,14 +25,14 @@ const PackagesRoute = PackagesRouteImport.update({
   path: '/packages',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArticlesRoute = ArticlesRouteImport.update({
-  id: '/articles',
-  path: '/articles',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
+  id: '/articles/',
+  path: '/articles/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArticlesArticleIdRoute = ArticlesArticleIdRouteImport.update({
@@ -43,45 +43,50 @@ const ArticlesArticleIdRoute = ArticlesArticleIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/articles': typeof ArticlesRouteWithChildren
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/articles/': typeof ArticlesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/articles': typeof ArticlesRouteWithChildren
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/articles': typeof ArticlesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/articles': typeof ArticlesRouteWithChildren
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/articles/': typeof ArticlesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/articles' | '/packages' | '/picks' | '/articles/$articleId'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/articles' | '/packages' | '/picks' | '/articles/$articleId'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
-    | '/articles'
     | '/packages'
     | '/picks'
     | '/articles/$articleId'
+    | '/articles/'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/packages' | '/picks' | '/articles/$articleId' | '/articles'
+  id:
+    | '__root__'
+    | '/'
+    | '/packages'
+    | '/picks'
+    | '/articles/$articleId'
+    | '/articles/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ArticlesRoute: typeof ArticlesRouteWithChildren
   PackagesRoute: typeof PackagesRoute
   PicksRoute: typeof PicksRoute
+  ArticlesIndexRoute: typeof ArticlesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -100,18 +105,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/articles': {
-      id: '/articles'
-      path: '/articles'
-      fullPath: '/articles'
-      preLoaderRoute: typeof ArticlesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/articles/': {
+      id: '/articles/'
+      path: '/articles'
+      fullPath: '/articles/'
+      preLoaderRoute: typeof ArticlesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/articles/$articleId': {
@@ -124,23 +129,11 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ArticlesRouteChildren {
-  ArticlesArticleIdRoute: typeof ArticlesArticleIdRoute
-}
-
-const ArticlesRouteChildren: ArticlesRouteChildren = {
-  ArticlesArticleIdRoute: ArticlesArticleIdRoute,
-}
-
-const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren(
-  ArticlesRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ArticlesRoute: ArticlesRouteWithChildren,
   PackagesRoute: PackagesRoute,
   PicksRoute: PicksRoute,
+  ArticlesIndexRoute: ArticlesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
