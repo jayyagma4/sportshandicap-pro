@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { articles } from "@/data/articles";
 
 export const Route = createFileRoute("/articles")({
   head: () => ({
@@ -17,96 +18,8 @@ export const Route = createFileRoute("/articles")({
 
 type League = "ALL" | "NFL" | "NBA" | "MLB" | "NHL";
 
-type Article = {
-  id: string;
-  league: Exclude<League, "ALL">;
-  category: string;
-  title: string;
-  excerpt: string;
-  author: string;
-  date: string;
-  readTime: string;
-  featured?: boolean;
-};
-
 const leagues: League[] = ["ALL", "NFL", "NBA", "MLB", "NHL"];
 
-const articles: Article[] = [
-  {
-    id: "a1",
-    league: "NHL",
-    category: "Game Preview",
-    title: "Colorado Avalanche vs Las Vegas Knights — Playoff edge analysis",
-    excerpt:
-      "MacKinnon meets Marner in a playoff clash that could define the series. Who holds the edge in Game 3?",
-    author: "Mike Davis",
-    date: "May 24, 2026",
-    readTime: "6 min",
-    featured: true,
-  },
-  {
-    id: "a2",
-    league: "NBA",
-    category: "Game Preview",
-    title: "Oklahoma City Thunder vs San Antonio Spurs — Where the smart money sits",
-    excerpt:
-      "OKC leads 2-1 but San Antonio fights back at home. Game 4 is a must-watch and the line has moved.",
-    author: "David Wilson",
-    date: "May 24, 2026",
-    readTime: "5 min",
-  },
-  {
-    id: "a3",
-    league: "NFL",
-    category: "Best Bets",
-    title: "DC Defenders vs Orlando Storm — Full breakdown and best bets",
-    excerpt:
-      "The Defenders invade Orlando on May 22nd. Can the Storm's offense hold the fort? Full breakdown inside.",
-    author: "Dave Johnson",
-    date: "May 22, 2026",
-    readTime: "7 min",
-  },
-  {
-    id: "a4",
-    league: "MLB",
-    category: "Trends",
-    title: "Phillies vs Rockies — Why the road dogs keep cashing at Coors",
-    excerpt: "A look at three trends quietly moving the needle on NL West totals this month.",
-    author: "M. Rinner",
-    date: "May 21, 2026",
-    readTime: "4 min",
-  },
-  {
-    id: "a5",
-    league: "NBA",
-    category: "Consensus",
-    title: "Where the public is wrong on tonight's NBA slate",
-    excerpt: "Three games where the consensus and sharp money are heading in opposite directions.",
-    author: "Mike Davis",
-    date: "May 20, 2026",
-    readTime: "5 min",
-  },
-  {
-    id: "a6",
-    league: "NHL",
-    category: "Series Outlook",
-    title: "Eastern Conference Final — Goalie matchup is the whole story",
-    excerpt: "Save percentage, high-danger chances, and what the model says about the series price.",
-    author: "D. Wilson",
-    date: "May 19, 2026",
-    readTime: "6 min",
-  },
-  {
-    id: "a7",
-    league: "NFL",
-    category: "Futures",
-    title: "Early Week 1 lines — Three sides worth grabbing now",
-    excerpt: "The market is thin and the numbers are soft. Three lines that should move by August.",
-    author: "Dave Johnson",
-    date: "May 18, 2026",
-    readTime: "5 min",
-  },
-];
 
 function ArticlesPage() {
   const [league, setLeague] = useState<League>("ALL");
@@ -187,7 +100,11 @@ function ArticlesPage() {
       {/* Featured */}
       {featured && (
         <ScrollReveal delay={120}>
-          <article className="mt-10 grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-center pb-12 border-b border-white/10 group cursor-pointer">
+          <Link
+            to="/articles/$articleId"
+            params={{ articleId: featured.id }}
+            className="mt-10 grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-center pb-12 border-b border-white/10 group cursor-pointer"
+          >
             <div className="order-2 lg:order-1">
               <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500">
                 <span className="text-[#1E90FF]">{featured.league}</span>
@@ -225,7 +142,8 @@ function ArticlesPage() {
                 </span>
               </div>
             </div>
-          </article>
+          </Link>
+
         </ScrollReveal>
       )}
 
@@ -233,7 +151,11 @@ function ArticlesPage() {
       <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
         {rest.map((a, i) => (
           <ScrollReveal key={a.id} delay={i * 60}>
-            <article className="group cursor-pointer flex flex-col h-full">
+            <Link
+              to="/articles/$articleId"
+              params={{ articleId: a.id }}
+              className="group cursor-pointer flex flex-col h-full"
+            >
               <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold">
                 <span className="text-[#1E90FF]">{a.league}</span>
                 <span className="h-px w-5 bg-white/10" />
@@ -250,8 +172,9 @@ function ArticlesPage() {
                   {a.readTime}
                 </span>
               </div>
-            </article>
+            </Link>
           </ScrollReveal>
+
         ))}
       </div>
 
