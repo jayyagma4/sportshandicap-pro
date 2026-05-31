@@ -151,7 +151,11 @@ function ArticlesPage() {
       <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
         {rest.map((a, i) => (
           <ScrollReveal key={a.id} delay={i * 60}>
-            <article className="group cursor-pointer flex flex-col h-full">
+            <Link
+              to="/articles/$articleId"
+              params={{ articleId: a.id }}
+              className="group cursor-pointer flex flex-col h-full"
+            >
               <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold">
                 <span className="text-[#1E90FF]">{a.league}</span>
                 <span className="h-px w-5 bg-white/10" />
@@ -168,8 +172,9 @@ function ArticlesPage() {
                   {a.readTime}
                 </span>
               </div>
-            </article>
+            </Link>
           </ScrollReveal>
+
         ))}
       </div>
 
