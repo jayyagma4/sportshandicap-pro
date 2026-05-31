@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { articles } from "@/data/articles";
 
 export const Route = createFileRoute("/articles")({
   head: () => ({
@@ -16,6 +17,9 @@ export const Route = createFileRoute("/articles")({
 });
 
 type League = "ALL" | "NFL" | "NBA" | "MLB" | "NHL";
+
+const leagues: League[] = ["ALL", "NFL", "NBA", "MLB", "NHL"];
+
 
 type Article = {
   id: string;
