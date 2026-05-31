@@ -100,7 +100,11 @@ function ArticlesPage() {
       {/* Featured */}
       {featured && (
         <ScrollReveal delay={120}>
-          <article className="mt-10 grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-center pb-12 border-b border-white/10 group cursor-pointer">
+          <Link
+            to="/articles/$articleId"
+            params={{ articleId: featured.id }}
+            className="mt-10 grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-center pb-12 border-b border-white/10 group cursor-pointer"
+          >
             <div className="order-2 lg:order-1">
               <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500">
                 <span className="text-[#1E90FF]">{featured.league}</span>
@@ -138,7 +142,8 @@ function ArticlesPage() {
                 </span>
               </div>
             </div>
-          </article>
+          </Link>
+
         </ScrollReveal>
       )}
 
