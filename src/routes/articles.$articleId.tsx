@@ -461,5 +461,3 @@ function BlockRenderer({ block }: { block: Block }) {
   }
 }
 
-// silence unused
-void ({} as Article);
