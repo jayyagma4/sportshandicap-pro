@@ -75,12 +75,12 @@ export function Navbar() {
                 </div>
               )}
             </div>
-            <a
-              href="#about"
+            <Link
+              to="/about"
               className="px-3 py-1.5 text-sm text-slate-200 hover:text-white rounded-full hover:bg-white/5 transition"
             >
               About Us
-            </a>
+            </Link>
           </div>
 
           <div className="flex items-center gap-3">
