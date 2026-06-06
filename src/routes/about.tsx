@@ -79,9 +79,8 @@ function AboutPage() {
             <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-slate-400 font-semibold">
               <span className="h-px w-10 bg-cyan-300/60" />
               <span>File 001 · About</span>
-              <span className="ml-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-emerald-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 ping-soft" />
-                Live since 2019
+              <span className="ml-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.03] border border-white/10 text-slate-300">
+                Est. 2019
               </span>
             </div>
             <h1
