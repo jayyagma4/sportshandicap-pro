@@ -61,16 +61,22 @@ export function Navbar() {
               </button>
               {open && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl border border-white/10 bg-[#0A0C1C]/95 backdrop-blur-2xl p-2 shadow-2xl">
-                  {["Betting Tools", "Live Odds", "Consensus", "Trends"].map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-center justify-between px-3 py-2 text-sm text-slate-300 hover:bg-white/5 rounded-lg cursor-not-allowed"
+                  {[
+                    { name: "Betting Tools", to: "/betting-tools" as const },
+                    { name: "Live Odds", to: "/live-odds" as const },
+                    { name: "Consensus", to: "/consensus" as const },
+                    { name: "Trends", to: "/trends" as const },
+                  ].map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.to}
+                      className="flex items-center justify-between px-3 py-2 text-sm text-slate-300 hover:bg-white/5 rounded-lg transition"
                     >
-                      {item}
-                      <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/10 text-slate-400">
+                      {item.name}
+                      <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-cyan-400/10 text-cyan-300 border border-cyan-400/20">
                         Soon
                       </span>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}
