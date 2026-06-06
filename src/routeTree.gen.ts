@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PicksRouteImport } from './routes/picks'
 import { Route as PackagesRouteImport } from './routes/packages'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
 import { Route as ArticlesArticleIdRouteImport } from './routes/articles.$articleId'
@@ -23,6 +24,11 @@ const PicksRoute = PicksRouteImport.update({
 const PackagesRoute = PackagesRouteImport.update({
   id: '/packages',
   path: '/packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -43,6 +49,7 @@ const ArticlesArticleIdRoute = ArticlesArticleIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
@@ -67,15 +76,23 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/packages'
     | '/picks'
     | '/articles/$articleId'
     | '/articles/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/packages' | '/picks' | '/articles/$articleId' | '/articles'
+  to:
+    | '/'
+    | '/about'
+    | '/packages'
+    | '/picks'
+    | '/articles/$articleId'
+    | '/articles'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/packages'
     | '/picks'
     | '/articles/$articleId'
@@ -84,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   PackagesRoute: typeof PackagesRoute
   PicksRoute: typeof PicksRoute
   ArticlesArticleIdRoute: typeof ArticlesArticleIdRoute
@@ -104,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/packages'
       fullPath: '/packages'
       preLoaderRoute: typeof PackagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -132,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   PackagesRoute: PackagesRoute,
   PicksRoute: PicksRoute,
   ArticlesArticleIdRoute: ArticlesArticleIdRoute,
@@ -140,13 +166,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
