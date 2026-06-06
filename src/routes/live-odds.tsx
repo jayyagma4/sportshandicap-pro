@@ -11,16 +11,10 @@ export const Route = createFileRoute("/live-odds")({
   }),
   component: () => (
     <ComingSoon
-      eyebrow="Module · Data Feed"
-      title="Live odds,"
-      highlight="from every major book."
-      description="A unified, low latency odds board across the biggest US sportsbooks. Compare lines side by side, spot the best price, and track movement as it happens."
+      eyebrow="Live Odds"
+      title="Live Odds"
+      description="A unified live odds board across every major US sportsbook. Coming soon."
       icon={Radio}
-      features={[
-        { title: "Side by Side Pricing", body: "Compare moneylines, spreads and totals across all major US books on one screen." },
-        { title: "Line Movement Charts", body: "Watch how the market moves into kickoff. Spot steam and reverse line moves instantly." },
-        { title: "Best Price Highlight", body: "We surface the sharpest available price for every market so you never leave value on the table." },
-      ]}
     />
   ),
 });

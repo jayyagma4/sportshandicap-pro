@@ -6,21 +6,15 @@ export const Route = createFileRoute("/trends")({
   head: () => ({
     meta: [
       { title: "Trends | Sportshandicapper" },
-      { name: "description", content: "Situational, ATS and matchup trends across every major league. Launching soon." },
+      { name: "description", content: "Situational and ATS trends. Launching soon." },
     ],
   }),
   component: () => (
     <ComingSoon
-      eyebrow="Module · Insights"
-      title="Trends that"
-      highlight="actually matter."
-      description="A trend engine that filters noise out of the data. Situational splits, ATS records, ump and ref splits, and matchup patterns you can act on."
+      eyebrow="Trends"
+      title="Trends"
+      description="Situational splits, ATS records and matchup patterns you can act on. Coming soon."
       icon={TrendingUp}
-      features={[
-        { title: "Situational Splits", body: "Home dog, road favorite, back to back, divisional, primetime, all sliced automatically." },
-        { title: "ATS Performance", body: "Against the spread records for every team and matchup, with sample size context." },
-        { title: "Custom Filters", body: "Build your own trend by stacking filters, then save it to your dashboard." },
-      ]}
     />
   ),
 });
