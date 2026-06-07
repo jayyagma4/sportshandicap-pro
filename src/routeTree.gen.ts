@@ -10,20 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrendsRouteImport } from './routes/trends'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as PicksRouteImport } from './routes/picks'
 import { Route as PackagesRouteImport } from './routes/packages'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LiveOddsRouteImport } from './routes/live-odds'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConsensusRouteImport } from './routes/consensus'
 import { Route as BettingToolsRouteImport } from './routes/betting-tools'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalIndexRouteImport } from './routes/portal.index'
 import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
+import { Route as PortalSettingsRouteImport } from './routes/portal.settings'
+import { Route as PortalProfileRouteImport } from './routes/portal.profile'
+import { Route as PortalPicksRouteImport } from './routes/portal.picks'
+import { Route as PortalPackagesRouteImport } from './routes/portal.packages'
 import { Route as ArticlesArticleIdRouteImport } from './routes/articles.$articleId'
 
 const TrendsRoute = TrendsRouteImport.update({
   id: '/trends',
   path: '/trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PicksRoute = PicksRouteImport.update({
@@ -36,14 +47,14 @@ const PackagesRoute = PackagesRouteImport.update({
   path: '/packages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LiveOddsRoute = LiveOddsRouteImport.update({
   id: '/live-odds',
   path: '/live-odds',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsensusRoute = ConsensusRouteImport.update({
@@ -66,10 +77,35 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
 const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
   id: '/articles/',
   path: '/articles/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PortalSettingsRoute = PortalSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProfileRoute = PortalProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPicksRoute = PortalPicksRouteImport.update({
+  id: '/picks',
+  path: '/picks',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPackagesRoute = PortalPackagesRouteImport.update({
+  id: '/packages',
+  path: '/packages',
+  getParentRoute: () => PortalRoute,
 } as any)
 const ArticlesArticleIdRoute = ArticlesArticleIdRouteImport.update({
   id: '/articles/$articleId',
@@ -82,26 +118,37 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/betting-tools': typeof BettingToolsRoute
   '/consensus': typeof ConsensusRoute
-  '/dashboard': typeof DashboardRoute
   '/live-odds': typeof LiveOddsRoute
+  '/login': typeof LoginRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
+  '/portal': typeof PortalRouteWithChildren
   '/trends': typeof TrendsRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/portal/packages': typeof PortalPackagesRoute
+  '/portal/picks': typeof PortalPicksRoute
+  '/portal/profile': typeof PortalProfileRoute
+  '/portal/settings': typeof PortalSettingsRoute
   '/articles/': typeof ArticlesIndexRoute
+  '/portal/': typeof PortalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/betting-tools': typeof BettingToolsRoute
   '/consensus': typeof ConsensusRoute
-  '/dashboard': typeof DashboardRoute
   '/live-odds': typeof LiveOddsRoute
+  '/login': typeof LoginRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
   '/trends': typeof TrendsRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/portal/packages': typeof PortalPackagesRoute
+  '/portal/picks': typeof PortalPicksRoute
+  '/portal/profile': typeof PortalProfileRoute
+  '/portal/settings': typeof PortalSettingsRoute
   '/articles': typeof ArticlesIndexRoute
+  '/portal': typeof PortalIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -109,13 +156,19 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/betting-tools': typeof BettingToolsRoute
   '/consensus': typeof ConsensusRoute
-  '/dashboard': typeof DashboardRoute
   '/live-odds': typeof LiveOddsRoute
+  '/login': typeof LoginRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
+  '/portal': typeof PortalRouteWithChildren
   '/trends': typeof TrendsRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
+  '/portal/packages': typeof PortalPackagesRoute
+  '/portal/picks': typeof PortalPicksRoute
+  '/portal/profile': typeof PortalProfileRoute
+  '/portal/settings': typeof PortalSettingsRoute
   '/articles/': typeof ArticlesIndexRoute
+  '/portal/': typeof PortalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -124,39 +177,56 @@ export interface FileRouteTypes {
     | '/about'
     | '/betting-tools'
     | '/consensus'
-    | '/dashboard'
     | '/live-odds'
+    | '/login'
     | '/packages'
     | '/picks'
+    | '/portal'
     | '/trends'
     | '/articles/$articleId'
+    | '/portal/packages'
+    | '/portal/picks'
+    | '/portal/profile'
+    | '/portal/settings'
     | '/articles/'
+    | '/portal/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/betting-tools'
     | '/consensus'
-    | '/dashboard'
     | '/live-odds'
+    | '/login'
     | '/packages'
     | '/picks'
     | '/trends'
     | '/articles/$articleId'
+    | '/portal/packages'
+    | '/portal/picks'
+    | '/portal/profile'
+    | '/portal/settings'
     | '/articles'
+    | '/portal'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/betting-tools'
     | '/consensus'
-    | '/dashboard'
     | '/live-odds'
+    | '/login'
     | '/packages'
     | '/picks'
+    | '/portal'
     | '/trends'
     | '/articles/$articleId'
+    | '/portal/packages'
+    | '/portal/picks'
+    | '/portal/profile'
+    | '/portal/settings'
     | '/articles/'
+    | '/portal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,10 +234,11 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BettingToolsRoute: typeof BettingToolsRoute
   ConsensusRoute: typeof ConsensusRoute
-  DashboardRoute: typeof DashboardRoute
   LiveOddsRoute: typeof LiveOddsRoute
+  LoginRoute: typeof LoginRoute
   PackagesRoute: typeof PackagesRoute
   PicksRoute: typeof PicksRoute
+  PortalRoute: typeof PortalRouteWithChildren
   TrendsRoute: typeof TrendsRoute
   ArticlesArticleIdRoute: typeof ArticlesArticleIdRoute
   ArticlesIndexRoute: typeof ArticlesIndexRoute
@@ -180,6 +251,13 @@ declare module '@tanstack/react-router' {
       path: '/trends'
       fullPath: '/trends'
       preLoaderRoute: typeof TrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/picks': {
@@ -196,18 +274,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/live-odds': {
       id: '/live-odds'
       path: '/live-odds'
       fullPath: '/live-odds'
       preLoaderRoute: typeof LiveOddsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/consensus': {
@@ -238,12 +316,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/articles/': {
       id: '/articles/'
       path: '/articles'
       fullPath: '/articles/'
       preLoaderRoute: typeof ArticlesIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/portal/settings': {
+      id: '/portal/settings'
+      path: '/settings'
+      fullPath: '/portal/settings'
+      preLoaderRoute: typeof PortalSettingsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/profile': {
+      id: '/portal/profile'
+      path: '/profile'
+      fullPath: '/portal/profile'
+      preLoaderRoute: typeof PortalProfileRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/picks': {
+      id: '/portal/picks'
+      path: '/picks'
+      fullPath: '/portal/picks'
+      preLoaderRoute: typeof PortalPicksRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/packages': {
+      id: '/portal/packages'
+      path: '/packages'
+      fullPath: '/portal/packages'
+      preLoaderRoute: typeof PortalPackagesRouteImport
+      parentRoute: typeof PortalRoute
     }
     '/articles/$articleId': {
       id: '/articles/$articleId'
@@ -255,15 +368,35 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface PortalRouteChildren {
+  PortalPackagesRoute: typeof PortalPackagesRoute
+  PortalPicksRoute: typeof PortalPicksRoute
+  PortalProfileRoute: typeof PortalProfileRoute
+  PortalSettingsRoute: typeof PortalSettingsRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalPackagesRoute: PortalPackagesRoute,
+  PortalPicksRoute: PortalPicksRoute,
+  PortalProfileRoute: PortalProfileRoute,
+  PortalSettingsRoute: PortalSettingsRoute,
+  PortalIndexRoute: PortalIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BettingToolsRoute: BettingToolsRoute,
   ConsensusRoute: ConsensusRoute,
-  DashboardRoute: DashboardRoute,
   LiveOddsRoute: LiveOddsRoute,
+  LoginRoute: LoginRoute,
   PackagesRoute: PackagesRoute,
   PicksRoute: PicksRoute,
+  PortalRoute: PortalRouteWithChildren,
   TrendsRoute: TrendsRoute,
   ArticlesArticleIdRoute: ArticlesArticleIdRoute,
   ArticlesIndexRoute: ArticlesIndexRoute,

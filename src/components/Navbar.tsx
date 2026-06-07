@@ -28,11 +28,12 @@ export function Navbar() {
 
           <div className="hidden lg:flex items-center gap-1 rounded-full bg-white/[0.02] px-2 py-1.5 border border-white/5">
             <Link
-              to="/dashboard"
+              to="/portal"
               className="px-3 py-1.5 text-sm text-slate-200 hover:text-white rounded-full hover:bg-white/5 transition"
             >
               Dashboard
             </Link>
+
             <Link
               to="/articles"
               className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-200 hover:text-white rounded-full hover:bg-white/5 transition"
@@ -96,16 +97,17 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => openAuth("login")}
+            <Link
+              to="/login"
               className="hidden sm:block text-sm text-slate-200 hover:text-white"
             >
               Log In
-            </button>
+            </Link>
             <button onClick={() => openAuth("signup")} className="btn-primary !py-2 !px-4 !text-sm">
               Join Now <ArrowRight className="h-3.5 w-3.5" />
             </button>
           </div>
+
         </nav>
       </div>
     </header>
