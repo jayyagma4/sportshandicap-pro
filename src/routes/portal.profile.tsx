@@ -35,7 +35,7 @@ function Profile() {
             <div className="w-24 h-24 rounded-full bg-[var(--p-blue-soft)] text-[var(--p-blue)] grid place-items-center font-bold text-4xl">
               {(name[0] || "J").toUpperCase()}
             </div>
-            <button className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[var(--p-text)] text-white grid place-items-center border-2 border-[var(--p-surface)]">
+            <button className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[var(--p-blue)] text-white grid place-items-center border-2 border-[var(--p-surface)]">
               <Camera className="h-4 w-4" />
             </button>
           </div>

@@ -30,7 +30,7 @@ function LoginPage() {
   return (
     <div className="portal-theme min-h-screen grid lg:grid-cols-[1.05fr_1fr]">
       {/* Left brand panel */}
-      <div className="relative hidden lg:flex flex-col justify-between p-12 bg-[var(--p-text)] text-white overflow-hidden">
+      <div className="relative hidden lg:flex flex-col justify-between p-12 bg-[#05070D] text-white overflow-hidden">
         <div
           className="absolute inset-0 opacity-[0.06] pointer-events-none"
           style={{
