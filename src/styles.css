@@ -316,3 +316,102 @@
   to { transform: translateX(-50%); }
 }
 .marquee-text { animation: marquee-text 60s linear infinite; }
+
+/* ============= Sportsbook Terminal ============= */
+.font-mono-num {
+  font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.terminal-grid {
+  background-color: #05070F;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.terminal-panel {
+  background: linear-gradient(180deg, rgba(13,17,32,0.85), rgba(8,11,22,0.85));
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+}
+.terminal-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #64748B;
+}
+.terminal-row {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s ease;
+}
+.terminal-row:hover { background: rgba(30,144,255,0.04); }
+.tape-up { color: #34D399; }
+.tape-down { color: #F87171; }
+.tape-flat { color: #94A3B8; }
+.led-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 9999px;
+  box-shadow: 0 0 8px currentColor;
+}
+.bar-track {
+  position: relative;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.bar-fill {
+  position: absolute; inset: 0 auto 0 0;
+  background: linear-gradient(90deg, #1E90FF, #22D3EE);
+}
+.label-mono {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #64748B;
+}
+.chip-mono {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.02);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #CBD5E1;
+  border-radius: 2px;
+  transition: all 0.15s ease;
+}
+.chip-mono:hover { border-color: rgba(255,255,255,0.25); color: #fff; }
+.chip-mono.is-active {
+  border-color: rgba(30,144,255,0.6);
+  background: rgba(30,144,255,0.1);
+  color: #fff;
+  box-shadow: 0 0 14px -4px rgba(30,144,255,0.6);
+}
+@keyframes ticker-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-blink { animation: ticker-blink 1.6s ease-in-out infinite; }
+.scanline {
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 2px,
+    rgba(255,255,255,0.015) 2px,
+    rgba(255,255,255,0.015) 3px
+  );
+}
