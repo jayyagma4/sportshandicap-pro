@@ -416,24 +416,24 @@
   );
 }
 
-/* ============= Portal (Light, Modern) ============= */
+/* ============= Portal (Dark, Modern) ============= */
 .portal-theme {
-  --p-bg: #F6F8FC;
-  --p-surface: #FFFFFF;
-  --p-surface-muted: #F1F4FA;
-  --p-border: #E4E9F2;
-  --p-border-strong: #D5DCEA;
-  --p-text: #0B1220;
-  --p-text-muted: #5B6677;
-  --p-text-faint: #8A95A8;
-  --p-blue: #2563EB;
-  --p-blue-soft: #E8EFFE;
-  --p-blue-hover: #1D4FD7;
-  --p-purple: #7C3AED;
-  --p-purple-soft: #EFE8FE;
-  --p-emerald: #059669;
-  --p-rose: #E11D48;
-  --p-amber: #D97706;
+  --p-bg: #0A0D14;
+  --p-surface: #11151F;
+  --p-surface-muted: #161B27;
+  --p-border: #1F2533;
+  --p-border-strong: #2A3142;
+  --p-text: #F5F7FB;
+  --p-text-muted: #9AA3B5;
+  --p-text-faint: #5E6679;
+  --p-blue: #3B82F6;
+  --p-blue-soft: rgba(59, 130, 246, 0.14);
+  --p-blue-hover: #5A98F8;
+  --p-purple: #A78BFA;
+  --p-purple-soft: rgba(167, 139, 250, 0.14);
+  --p-emerald: #34D399;
+  --p-rose: #FB7185;
+  --p-amber: #FBBF24;
 
   background: var(--p-bg);
   color: var(--p-text);
@@ -508,7 +508,7 @@
 }
 .p-topnav-link:hover { color: var(--p-text); background: var(--p-surface-muted); }
 .p-topnav-link.is-active {
-  background: var(--p-text);
+  background: var(--p-blue);
   color: #fff;
 }
 

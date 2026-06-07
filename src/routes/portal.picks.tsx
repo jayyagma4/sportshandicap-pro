@@ -71,7 +71,7 @@ function MyPicks() {
                 onClick={() => setFilter(f)}
                 className={`px-3 h-8 rounded-full text-[12px] font-semibold transition ${
                   filter === f
-                    ? "bg-[var(--p-text)] text-white"
+                    ? "bg-[var(--p-blue)] text-white"
                     : "bg-[var(--p-surface-muted)] text-[var(--p-text-muted)] hover:text-[var(--p-text)]"
                 }`}
               >
