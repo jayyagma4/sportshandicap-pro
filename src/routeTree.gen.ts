@@ -13,6 +13,7 @@ import { Route as TrendsRouteImport } from './routes/trends'
 import { Route as PicksRouteImport } from './routes/picks'
 import { Route as PackagesRouteImport } from './routes/packages'
 import { Route as LiveOddsRouteImport } from './routes/live-odds'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConsensusRouteImport } from './routes/consensus'
 import { Route as BettingToolsRouteImport } from './routes/betting-tools'
 import { Route as AboutRouteImport } from './routes/about'
@@ -38,6 +39,11 @@ const PackagesRoute = PackagesRouteImport.update({
 const LiveOddsRoute = LiveOddsRouteImport.update({
   id: '/live-odds',
   path: '/live-odds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsensusRoute = ConsensusRouteImport.update({
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/betting-tools': typeof BettingToolsRoute
   '/consensus': typeof ConsensusRoute
+  '/dashboard': typeof DashboardRoute
   '/live-odds': typeof LiveOddsRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/betting-tools': typeof BettingToolsRoute
   '/consensus': typeof ConsensusRoute
+  '/dashboard': typeof DashboardRoute
   '/live-odds': typeof LiveOddsRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/betting-tools': typeof BettingToolsRoute
   '/consensus': typeof ConsensusRoute
+  '/dashboard': typeof DashboardRoute
   '/live-odds': typeof LiveOddsRoute
   '/packages': typeof PackagesRoute
   '/picks': typeof PicksRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/betting-tools'
     | '/consensus'
+    | '/dashboard'
     | '/live-odds'
     | '/packages'
     | '/picks'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/betting-tools'
     | '/consensus'
+    | '/dashboard'
     | '/live-odds'
     | '/packages'
     | '/picks'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/betting-tools'
     | '/consensus'
+    | '/dashboard'
     | '/live-odds'
     | '/packages'
     | '/picks'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BettingToolsRoute: typeof BettingToolsRoute
   ConsensusRoute: typeof ConsensusRoute
+  DashboardRoute: typeof DashboardRoute
   LiveOddsRoute: typeof LiveOddsRoute
   PackagesRoute: typeof PackagesRoute
   PicksRoute: typeof PicksRoute
@@ -188,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/live-odds'
       fullPath: '/live-odds'
       preLoaderRoute: typeof LiveOddsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/consensus': {
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BettingToolsRoute: BettingToolsRoute,
   ConsensusRoute: ConsensusRoute,
+  DashboardRoute: DashboardRoute,
   LiveOddsRoute: LiveOddsRoute,
   PackagesRoute: PackagesRoute,
   PicksRoute: PicksRoute,
@@ -250,3 +271,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
