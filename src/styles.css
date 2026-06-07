@@ -508,7 +508,7 @@
 }
 .p-topnav-link:hover { color: var(--p-text); background: var(--p-surface-muted); }
 .p-topnav-link.is-active {
-  background: var(--p-text);
+  background: var(--p-blue);
   color: #fff;
 }
 
