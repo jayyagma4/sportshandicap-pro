@@ -28,6 +28,12 @@ export function Navbar() {
 
           <div className="hidden lg:flex items-center gap-1 rounded-full bg-white/[0.02] px-2 py-1.5 border border-white/5">
             <Link
+              to="/dashboard"
+              className="px-3 py-1.5 text-sm text-slate-200 hover:text-white rounded-full hover:bg-white/5 transition"
+            >
+              Dashboard
+            </Link>
+            <Link
               to="/articles"
               className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-200 hover:text-white rounded-full hover:bg-white/5 transition"
             >
