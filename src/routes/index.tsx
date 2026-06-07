@@ -1,24 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowUpRight,
-  Lock,
-  ShieldCheck,
-  Activity,
-  Clock,
-  Trophy,
-} from "lucide-react";
+import { ArrowUpRight, Lock, ShieldCheck, Activity, TrendingUp, TrendingDown, Minus, Zap } from "lucide-react";
 
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { Counter } from "@/components/Counter";
 import { MatchupLogos, type League } from "@/components/TeamLogo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sportshandicapper | Verified Picks & Sharp Analytics" },
-      { name: "description", content: "Timestamped expert picks, verified records, and institutional sports analytics across MLB, NBA, NFL, NHL, CFB and CBB." },
-      { property: "og:title", content: "Sportshandicapper | Verified Picks & Sharp Analytics" },
-      { property: "og:description", content: "Timestamped expert picks, verified records, and live sharp analytics." },
+      { title: "Sportshandicapper | Live Betting Terminal" },
+      { name: "description", content: "Live odds, verified picks, sharp money flow, and institutional sports analytics across all major US leagues." },
+      { property: "og:title", content: "Sportshandicapper | Live Betting Terminal" },
+      { property: "og:description", content: "Live odds, verified picks, and sharp analytics." },
     ],
   }),
   component: Home,
@@ -26,61 +18,88 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <>
-      <Ticker />
-      <Masthead />
+    <div className="terminal-grid">
+      <Tape />
+      <CommandBar />
       <Hero />
-      <RecordStrip />
-      <LeadStory />
-      <Leaderboard />
-      <Packages />
-      <FinalCta />
-    </>
+      <Board />
+      <Metrics />
+      <Desk />
+      <PackagesStrip />
+      <FinalBar />
+    </div>
   );
 }
 
-/* ------------------------------ TICKER ------------------------------ */
+/* ------------------------------ TAPE ------------------------------ */
 
-const tickerItems = [
-  { league: "MLB", text: "NYY -1.5 vs BOS", res: "WIN" },
-  { league: "NBA", text: "BOS/MIA Over 218.5", res: "WIN" },
-  { league: "NHL", text: "EDM ML vs LAK", res: "WIN" },
-  { league: "NFL", text: "KC -3 vs LAC", res: "PEND" },
-  { league: "CFB", text: "Georgia -7.5", res: "WIN" },
-  { league: "MLB", text: "LAD/SD Under 8", res: "LOSS" },
-  { league: "CBB", text: "Duke -4 vs UNC", res: "WIN" },
-  { league: "NBA", text: "DEN ML vs PHX", res: "WIN" },
+const tape = [
+  { lg: "MLB", sym: "NYY/BOS", line: "-1.5", px: -110, mv: +5, res: "W" },
+  { lg: "NBA", sym: "BOS/MIA", line: "O 218.5", px: -108, mv: -3, res: "W" },
+  { lg: "NHL", sym: "EDM/LAK", line: "ML", px: -135, mv: +12, res: "W" },
+  { lg: "NFL", sym: "KC/LAC", line: "-3", px: -110, mv: 0, res: "P" },
+  { lg: "CFB", sym: "UGA/AUB", line: "-7.5", px: -115, mv: +4, res: "W" },
+  { lg: "MLB", sym: "LAD/SD", line: "U 8", px: -105, mv: -2, res: "L" },
+  { lg: "CBB", sym: "DUKE/UNC", line: "-4", px: -110, mv: +6, res: "W" },
+  { lg: "NBA", sym: "DEN/PHX", line: "ML", px: -160, mv: +8, res: "W" },
 ];
 
-function Ticker() {
-  const items = [...tickerItems, ...tickerItems];
+function Tape() {
+  const items = [...tape, ...tape];
   return (
-    <div className="border-b border-white/10 bg-black/40 overflow-hidden">
-      <div className="flex whitespace-nowrap py-3 marquee-text">
-        {items.map((i, idx) => (
-          <div key={idx} className="flex items-center gap-3 px-6 text-[11px] uppercase tracking-[0.18em] font-bold">
-            <span className="text-slate-500">{i.league}</span>
-            <span className="serif-italic text-slate-200 normal-case tracking-normal text-sm">{i.text}</span>
-            <span className={i.res === "WIN" ? "text-emerald-300" : i.res === "LOSS" ? "text-rose-400" : "text-amber-300"}>{i.res}</span>
-            <span className="text-slate-700">/</span>
-          </div>
-        ))}
+    <div className="border-y border-white/10 bg-black/60 overflow-hidden">
+      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10 bg-[#05070F]">
+        <span className="label-mono text-emerald-300 inline-flex items-center gap-2">
+          <span className="led-dot bg-emerald-400 text-emerald-400 live-blink" />
+          LIVE TAPE
+        </span>
+        <span className="label-mono text-slate-600">/ MARKET</span>
+        <span className="ml-auto label-mono text-slate-600">DELAYED 15S</span>
+      </div>
+      <div className="flex whitespace-nowrap py-2.5 marquee-text">
+        {items.map((i, idx) => {
+          const dir = i.mv > 0 ? "tape-up" : i.mv < 0 ? "tape-down" : "tape-flat";
+          const Icon = i.mv > 0 ? TrendingUp : i.mv < 0 ? TrendingDown : Minus;
+          return (
+            <div key={idx} className="flex items-center gap-2.5 px-5 font-mono-num text-[11px]">
+              <span className="label-mono">{i.lg}</span>
+              <span className="text-slate-200 font-semibold">{i.sym}</span>
+              <span className="text-slate-400">{i.line}</span>
+              <span className="text-slate-500">{i.px > 0 ? `+${i.px}` : i.px}</span>
+              <span className={`${dir} inline-flex items-center gap-1`}>
+                <Icon className="h-3 w-3" />
+                {i.mv > 0 ? `+${i.mv}` : i.mv}
+              </span>
+              <span className={`text-[10px] font-bold ${i.res === "W" ? "tape-up" : i.res === "L" ? "tape-down" : "text-amber-300"}`}>{i.res}</span>
+              <span className="text-slate-800">|</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-/* ------------------------------ MASTHEAD ------------------------------ */
+/* ------------------------------ COMMAND BAR ------------------------------ */
 
-function Masthead() {
-  const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+function CommandBar() {
+  const now = new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
+  const date = new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }).toUpperCase();
   return (
-    <div className="container-x pt-10">
-      <div className="rule-double">
-        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.28em] font-bold text-slate-500 py-2">
-          <span>Vol. III &middot; No. 24</span>
-          <span className="hidden sm:block serif-italic normal-case tracking-normal text-slate-400 text-base">The Sportshandicapper Daily</span>
-          <span>{today}</span>
+    <div className="container-x">
+      <div className="flex items-center justify-between border-b border-white/5 py-3 text-[10px] font-mono-num tracking-[0.2em] uppercase">
+        <div className="flex items-center gap-4 text-slate-500">
+          <span>SESSION / {date}</span>
+          <span className="text-slate-700">·</span>
+          <span>USR / GUEST</span>
+          <span className="text-slate-700">·</span>
+          <span className="text-slate-400">DESK / NYC</span>
+        </div>
+        <div className="flex items-center gap-4 text-slate-500">
+          <span className="inline-flex items-center gap-2 text-emerald-300">
+            <span className="led-dot bg-emerald-400 text-emerald-400" /> ONLINE
+          </span>
+          <span>{now} ET</span>
         </div>
       </div>
     </div>
@@ -91,54 +110,142 @@ function Masthead() {
 
 function Hero() {
   return (
-    <section className="container-x pt-14 pb-20">
-      <div className="grid lg:grid-cols-12 gap-12 items-end">
+    <section className="container-x pt-16 pb-12">
+      <div className="grid lg:grid-cols-12 gap-10">
         <ScrollReveal>
           <div className="lg:col-span-8">
-            <div className="kicker kicker-rule text-emerald-300 mb-6">
-              <span className="relative inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 relative ping-soft" />
-                Today&apos;s edition &middot; 12 picks filed
+            <div className="flex items-center gap-2 mb-6">
+              <span className="chip-mono is-active">
+                <span className="led-dot bg-emerald-400 text-emerald-400 live-blink" />
+                MARKET OPEN
               </span>
+              <span className="label-mono">12 PICKS FILED · 6 LEAGUES</span>
             </div>
-            <h1 className="serif-display text-[64px] md:text-[120px] text-white">
-              Sharper picks.
-              <br />
-              <span className="serif-italic text-[#1E90FF]">Verified</span> records.
+            <h1 className="font-mono-num text-white text-[56px] md:text-[96px] leading-[0.95] font-bold tracking-tight">
+              SHARP MONEY,<br />
+              <span className="text-[#1E90FF]">EXECUTED.</span>
             </h1>
+            <p className="mt-8 text-slate-400 text-base max-w-xl leading-relaxed">
+              Institutional-grade pick feed across NBA, NFL, MLB, NHL, CFB, and CBB. Every selection timestamped before the line moves and graded after the final whistle.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/packages" className="btn-primary">
+                Open Account <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <Link to="/picks" className="btn-secondary">
+                View Live Board
+              </Link>
+            </div>
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={120}>
-          <div className="lg:col-span-4 lg:border-l lg:border-white/10 lg:pl-8">
-            <p className="text-base text-slate-300 leading-relaxed drop-cap">
-              We don&apos;t sell hype. Every pick is timestamped before the line moves, posted with reasoning, and graded after the final whistle. Coverage spans MLB, NBA, NFL, NHL, CFB, and CBB.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/packages" className="btn-primary">
-                View Membership <ArrowUpRight className="h-4 w-4" />
-              </Link>
-              <Link to="/picks" className="btn-secondary">
-                Today&apos;s Board
-              </Link>
+          <div className="lg:col-span-4 grid grid-cols-2 gap-3">
+            <StatTile label="30D HIT" value="67.4" suffix="%" up />
+            <StatTile label="YTD UNITS" value="+184.3" up />
+            <StatTile label="ROI" value="12.8" suffix="%" up />
+            <StatTile label="STREAK" value="7W" up />
+            <div className="col-span-2 terminal-panel rounded-sm p-4">
+              <div className="label-mono mb-3">CONFIDENCE INDEX</div>
+              <div className="bar-track">
+                <div className="bar-fill" style={{ width: "82%" }} />
+              </div>
+              <div className="flex items-center justify-between mt-2 font-mono-num text-[11px]">
+                <span className="text-slate-500">LOW</span>
+                <span className="text-white font-bold">82 / 100</span>
+                <span className="text-slate-500">MAX</span>
+              </div>
             </div>
           </div>
         </ScrollReveal>
       </div>
+    </section>
+  );
+}
 
-      <ScrollReveal delay={200}>
-        <div className="mt-14 pt-6 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-          <div className="flex items-center gap-3 text-slate-400">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            <span className="serif-italic text-slate-300">Third-party verified records</span>
+function StatTile({ label, value, suffix, up }: { label: string; value: string; suffix?: string; up?: boolean }) {
+  return (
+    <div className="terminal-panel rounded-sm p-4">
+      <div className="flex items-center justify-between mb-2">
+        <span className="label-mono">{label}</span>
+        {up ? <TrendingUp className="h-3 w-3 text-emerald-300" /> : <TrendingDown className="h-3 w-3 text-rose-400" />}
+      </div>
+      <div className="font-mono-num text-3xl text-white font-bold">
+        {value}<span className="text-slate-500 text-xl ml-0.5">{suffix}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------ BOARD ------------------------------ */
+
+const board = [
+  { lg: "MLB", time: "19:05", a: "NYY", b: "BOS", pick: "NYY -1.5", conf: 92, units: 3, expert: "M.RINNER", move: +5 },
+  { lg: "NBA", time: "20:00", a: "BOS", b: "MIA", pick: "OVER 218.5", conf: 88, units: 2, expert: "M.DAVIS", move: -3 },
+  { lg: "NHL", time: "22:00", a: "EDM", b: "LAK", pick: "EDM PL", conf: 81, units: 2, expert: "K.PRATT", move: +12 },
+  { lg: "NFL", time: "20:20", a: "KC", b: "LAC", pick: "KC -3", conf: 76, units: 2, expert: "M.DAVIS", move: 0 },
+  { lg: "CFB", time: "15:30", a: "UGA", b: "AUB", pick: "UGA -7.5", conf: 79, units: 2, expert: "D.WILSON", move: +4 },
+];
+
+function Board() {
+  return (
+    <section className="container-x py-12">
+      <ScrollReveal>
+        <div className="terminal-panel rounded-sm">
+          <div className="terminal-panel-header">
+            <div className="flex items-center gap-3">
+              <span className="led-dot bg-emerald-400 text-emerald-400 live-blink" />
+              <span className="text-white">LIVE BOARD</span>
+              <span className="text-slate-600">/ TODAYS CARD</span>
+            </div>
+            <Link to="/picks" className="text-cyan-300 hover:text-white inline-flex items-center gap-1.5">
+              FULL BOARD <ArrowUpRight className="h-3 w-3" />
+            </Link>
           </div>
-          <div className="flex items-center gap-3 text-slate-400">
-            <Clock className="h-4 w-4 text-cyan-300" />
-            <span className="serif-italic text-slate-300">Filed pre-market move</span>
+
+          <div className="grid grid-cols-[60px_60px_1fr_120px_180px_80px_80px] gap-3 px-4 py-3 border-b border-white/10 label-mono">
+            <span>LG</span>
+            <span>TIME</span>
+            <span>MATCHUP</span>
+            <span>SELECTION</span>
+            <span>CONFIDENCE</span>
+            <span className="text-right">UNITS</span>
+            <span className="text-right">MV</span>
           </div>
-          <div className="flex items-center gap-3 text-slate-400">
-            <Activity className="h-4 w-4 text-[#1E90FF]" />
-            <span className="serif-italic text-slate-300">Graded transparently, win or lose</span>
+
+          <div>
+            {board.map((r, i) => (
+              <div key={i} className="terminal-row grid grid-cols-[60px_60px_1fr_120px_180px_80px_80px] gap-3 px-4 py-4 items-center">
+                <span className="font-mono-num text-[11px] text-[#1E90FF] font-bold">{r.lg}</span>
+                <span className="font-mono-num text-[11px] text-slate-400">{r.time}</span>
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <MatchupLogos league={r.lg as League} a={r.a} b={r.b} size={22} />
+                  <span className="font-mono-num text-sm text-white font-semibold truncate">{r.a} <span className="text-slate-600">@</span> {r.b}</span>
+                </div>
+                {i < 2 ? (
+                  <span className="font-mono-num text-[11px] text-slate-600 inline-flex items-center gap-1.5">
+                    <Lock className="h-3 w-3" /> ████████
+                  </span>
+                ) : (
+                  <span className="font-mono-num text-[11px] text-cyan-300 font-bold">{r.pick}</span>
+                )}
+                <div className="flex items-center gap-2">
+                  <div className="bar-track flex-1">
+                    <div className="bar-fill" style={{ width: `${r.conf}%` }} />
+                  </div>
+                  <span className="font-mono-num text-[11px] text-white font-bold w-7 text-right">{r.conf}</span>
+                </div>
+                <span className="font-mono-num text-sm text-white font-bold text-right">{r.units}.0</span>
+                <span className={`font-mono-num text-[11px] text-right ${r.move > 0 ? "tape-up" : r.move < 0 ? "tape-down" : "tape-flat"}`}>
+                  {r.move > 0 ? `+${r.move}` : r.move}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="px-4 py-3 border-t border-white/10 flex items-center justify-between label-mono">
+            <span>SHOWING 5 / 14 · SUBSCRIBE TO UNLOCK</span>
+            <Link to="/packages" className="text-cyan-300 hover:text-white">UNLOCK FULL FEED →</Link>
           </div>
         </div>
       </ScrollReveal>
@@ -146,287 +253,193 @@ function Hero() {
   );
 }
 
-/* --------------------------- RECORD STRIP --------------------------- */
+/* ------------------------------ METRICS ------------------------------ */
 
-function RecordStrip() {
-  const records = [
-    { label: "30-day hit", value: 67.4, suffix: "%", decimals: 1 },
-    { label: "YTD units", value: 184, prefix: "+" },
-    { label: "Win streak", value: 7, suffix: "W" },
-    { label: "Return on investment", value: 12.8, suffix: "%", decimals: 1 },
+function Metrics() {
+  const data = [
+    { lg: "MLB", w: 78, l: 41, units: 64.2, roi: 14.1 },
+    { lg: "NBA", w: 52, l: 33, units: 38.7, roi: 11.8 },
+    { lg: "NFL", w: 31, l: 19, units: 28.4, roi: 16.2 },
+    { lg: "NHL", w: 44, l: 28, units: 22.9, roi: 9.6 },
+    { lg: "CFB", w: 27, l: 18, units: 19.1, roi: 12.4 },
+    { lg: "CBB", w: 35, l: 22, units: 11.0, roi: 8.3 },
   ];
   return (
-    <section className="border-y border-white/10 bg-black/20">
-      <div className="container-x py-12 grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
-        {records.map((r, i) => (
-          <ScrollReveal key={r.label} delay={i * 80}>
-            <div className="px-6 text-center">
-              <div className="serif-display text-5xl md:text-6xl text-white">
-                <Counter to={r.value} prefix={r.prefix} suffix={r.suffix} decimals={r.decimals} />
-              </div>
-              <div className="kicker mt-3 text-slate-500">{r.label}</div>
-            </div>
-          </ScrollReveal>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ---------------------------- LEAD STORY ---------------------------- */
-
-const today = [
-  { league: "MLB", time: "7:05 PM", a: "NYY", b: "BOS", pick: "NYY -1.5", conf: 92, units: 3, expert: "M. Rinner" },
-  { league: "NBA", time: "8:00 PM", a: "BOS", b: "MIA", pick: "Over 218.5", conf: 88, units: 2, expert: "M. Davis" },
-  { league: "NHL", time: "10:00 PM", a: "EDM", b: "LAK", pick: "EDM Puck Line", conf: 81, units: 2, expert: "K. Pratt" },
-];
-
-function LeadStory() {
-  return (
-    <section className="container-x py-24">
+    <section className="container-x py-12">
       <ScrollReveal>
-        <div className="flex items-end justify-between gap-6 pb-8 border-b border-white/10">
+        <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-end mb-6">
           <div>
-            <div className="kicker kicker-rule text-[#1E90FF]">Section 01 &middot; The Board</div>
-            <h2 className="mt-4 serif-display text-5xl md:text-7xl text-white">
-              Tonight&apos;s <span className="serif-italic text-[#1E90FF]">card</span>.
-            </h2>
+            <div className="label-mono mb-3 text-cyan-300">// 02 PERFORMANCE / BY LEAGUE</div>
+            <h2 className="font-mono-num text-white text-4xl md:text-5xl font-bold">YEAR TO DATE</h2>
           </div>
-          <Link to="/picks" className="hidden md:inline-flex items-center gap-2 text-sm text-slate-300 editorial-link group">
-            View full board
-            <ArrowUpRight className="h-4 w-4 text-[#1E90FF] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+          <span className="label-mono">UPDATED 14:32:08 ET</span>
+        </div>
+
+        <div className="terminal-panel rounded-sm overflow-x-auto">
+          <div className="grid grid-cols-[80px_1fr_120px_120px_120px] gap-3 px-4 py-3 border-b border-white/10 label-mono min-w-[560px]">
+            <span>LG</span><span>WIN RATE</span><span className="text-right">W·L</span><span className="text-right">UNITS</span><span className="text-right">ROI</span>
+          </div>
+          {data.map((d) => {
+            const wr = (d.w / (d.w + d.l)) * 100;
+            return (
+              <div key={d.lg} className="terminal-row grid grid-cols-[80px_1fr_120px_120px_120px] gap-3 px-4 py-3.5 items-center min-w-[560px]">
+                <span className="font-mono-num text-[#1E90FF] font-bold text-sm">{d.lg}</span>
+                <div className="flex items-center gap-3">
+                  <div className="bar-track flex-1 max-w-[280px]">
+                    <div className="bar-fill" style={{ width: `${wr}%` }} />
+                  </div>
+                  <span className="font-mono-num text-xs text-white font-bold w-12">{wr.toFixed(1)}%</span>
+                </div>
+                <span className="font-mono-num text-xs text-slate-300 text-right">{d.w}-{d.l}</span>
+                <span className="font-mono-num text-xs text-emerald-300 text-right font-bold">+{d.units.toFixed(1)}</span>
+                <span className="font-mono-num text-xs text-cyan-300 text-right font-bold">{d.roi.toFixed(1)}%</span>
+              </div>
+            );
+          })}
         </div>
       </ScrollReveal>
-
-      <div className="mt-10 divide-y divide-white/10">
-        {today.map((row, i) => (
-          <ScrollReveal key={row.a} delay={i * 80}>
-            <article className="grid grid-cols-12 gap-4 md:gap-8 py-8 group">
-              <div className="col-span-2 md:col-span-1">
-                <div className="section-no">No. {String(i + 1).padStart(2, "0")}</div>
-                <div className="kicker text-[#1E90FF] mt-1">{row.league}</div>
-              </div>
-              <div className="col-span-10 md:col-span-6 min-w-0">
-                <div className="text-[10px] uppercase tracking-[0.22em] font-bold text-slate-500 mb-2 font-mono">
-                  {row.time}
-                </div>
-                <div className="flex items-center gap-3">
-                  <MatchupLogos league={row.league as League} a={row.a} b={row.b} size={28} />
-                  <h3 className="serif-display text-2xl md:text-3xl text-white group-hover:text-[#1E90FF] transition-colors">
-                    {row.a} <span className="serif-italic text-slate-500">vs</span> {row.b}
-                  </h3>
-                </div>
-                <div className="mt-3 text-sm text-slate-500 serif-italic flex items-center gap-2">
-                  <Lock className="h-3 w-3" /> Selection reserved: {row.pick.replace(/./g, "•").slice(0, 6)}…
-                </div>
-              </div>
-              <div className="hidden md:block md:col-span-3">
-                <div className="kicker text-slate-500 mb-2">Confidence</div>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 h-px bg-white/10 relative">
-                    <div className="absolute inset-y-0 left-0 bg-[#1E90FF]" style={{ width: `${row.conf}%`, height: "1px", top: "50%" }} />
-                    <div className="absolute h-2 w-2 rounded-full bg-[#1E90FF]" style={{ left: `calc(${row.conf}% - 4px)`, top: "50%", marginTop: "-4px" }} />
-                  </div>
-                  <span className="font-mono text-sm font-bold text-white tabular-nums">{row.conf}</span>
-                </div>
-              </div>
-              <div className="col-span-12 md:col-span-2 flex md:flex-col items-center md:items-end justify-between gap-2 md:text-right">
-                <div>
-                  <div className="kicker text-slate-500">Units</div>
-                  <div className="serif-display text-3xl text-white mt-1">{row.units}</div>
-                </div>
-                <div className="text-[11px] uppercase tracking-[0.2em] text-slate-300 font-bold">{row.expert}</div>
-              </div>
-            </article>
-          </ScrollReveal>
-        ))}
-      </div>
-
-      <div className="mt-6 flex items-center justify-between">
-        <span className="serif-italic text-slate-500 text-sm">Nine more picks behind the paywall.</span>
-        <Link to="/picks" className="text-sm text-slate-300 editorial-link inline-flex items-center gap-2 group">
-          Unlock the full board
-          <ArrowUpRight className="h-3.5 w-3.5 text-[#1E90FF] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-        </Link>
-      </div>
     </section>
   );
 }
 
-/* --------------------------- LEADERBOARD --------------------------- */
+/* ------------------------------ DESK ------------------------------ */
 
 const experts = [
-  { name: "Michael Rinner", sport: "MLB Specialist", wl: "128-74", units: 184.3, roi: 18.2 },
-  { name: "Mike Davis", sport: "NBA / CBB", wl: "94-58", units: 142.7, roi: 14.6 },
-  { name: "Kyle Pratt", sport: "NHL / NFL", wl: "76-49", units: 98.4, roi: 11.9 },
+  { name: "MICHAEL RINNER", id: "MRN-001", sport: "MLB · NHL", wl: "128-74", units: 184.3, roi: 18.2 },
+  { name: "MIKE DAVIS", id: "MDV-002", sport: "NBA · CBB", wl: "94-58", units: 142.7, roi: 14.6 },
+  { name: "KYLE PRATT", id: "KPR-003", sport: "NHL · NFL", wl: "76-49", units: 98.4, roi: 11.9 },
 ];
 
-function Leaderboard() {
+function Desk() {
   return (
-    <section className="container-x py-24 border-t border-white/10">
+    <section className="container-x py-12">
       <ScrollReveal>
-        <div className="flex items-end justify-between gap-6 pb-8 border-b border-white/10">
-          <div>
-            <div className="kicker kicker-rule text-cyan-300">Section 02 &middot; The Desk</div>
-            <h2 className="mt-4 serif-display text-5xl md:text-7xl text-white">
-              Our verified <span className="serif-italic text-[#1E90FF]">handicappers</span>.
-            </h2>
-          </div>
-        </div>
-      </ScrollReveal>
-
-      <div className="mt-10 grid md:grid-cols-3 gap-12 md:divide-x md:divide-white/10">
-        {experts.map((e, i) => (
-          <ScrollReveal key={e.name} delay={i * 100}>
-            <div className="md:px-8 first:md:pl-0">
-              <div className="flex items-baseline justify-between mb-5">
-                <div className="section-no">No. {String(i + 1).padStart(2, "0")}</div>
-                <div className="kicker text-[#1E90FF]">{e.sport}</div>
+        <div className="label-mono mb-3 text-cyan-300">// 03 THE DESK / VERIFIED HANDICAPPERS</div>
+        <h2 className="font-mono-num text-white text-4xl md:text-5xl font-bold mb-8">ACTIVE TRADERS</h2>
+        <div className="grid md:grid-cols-3 gap-3">
+          {experts.map((e) => (
+            <div key={e.id} className="terminal-panel rounded-sm p-5">
+              <div className="flex items-center justify-between mb-4">
+                <span className="label-mono text-emerald-300 inline-flex items-center gap-2">
+                  <span className="led-dot bg-emerald-400 text-emerald-400" /> ACTIVE
+                </span>
+                <span className="label-mono">{e.id}</span>
               </div>
-              <h3 className="serif-display text-3xl md:text-4xl text-white">{e.name}</h3>
-              <p className="mt-3 text-sm text-slate-400 serif-italic">
-                Filed under the desk since &apos;23. Tracked publicly, win and loss.
-              </p>
-              <div className="mt-8 grid grid-cols-3 gap-4 border-t border-white/10 pt-5">
-                <div>
-                  <div className="kicker text-slate-500">W&middot;L</div>
-                  <div className="font-mono font-bold text-white text-sm mt-2">{e.wl}</div>
-                </div>
-                <div>
-                  <div className="kicker text-slate-500">Units</div>
-                  <div className="font-mono font-bold text-emerald-300 text-sm mt-2">+{e.units}</div>
-                </div>
-                <div>
-                  <div className="kicker text-slate-500">ROI</div>
-                  <div className="font-mono font-bold text-cyan-300 text-sm mt-2">{e.roi}%</div>
-                </div>
+              <div className="font-mono-num text-white text-lg font-bold tracking-tight">{e.name}</div>
+              <div className="label-mono text-[#1E90FF] mt-1">{e.sport}</div>
+              <div className="mt-5 pt-4 border-t border-white/10 grid grid-cols-3 gap-2">
+                <Stat label="W·L" value={e.wl} />
+                <Stat label="UNITS" value={`+${e.units}`} accent="emerald" />
+                <Stat label="ROI" value={`${e.roi}%`} accent="cyan" />
               </div>
             </div>
-          </ScrollReveal>
-        ))}
-      </div>
+          ))}
+        </div>
+      </ScrollReveal>
     </section>
+  );
+}
+
+function Stat({ label, value, accent }: { label: string; value: string; accent?: "emerald" | "cyan" }) {
+  const c = accent === "emerald" ? "text-emerald-300" : accent === "cyan" ? "text-cyan-300" : "text-white";
+  return (
+    <div>
+      <div className="label-mono">{label}</div>
+      <div className={`font-mono-num text-sm font-bold mt-1 ${c}`}>{value}</div>
+    </div>
   );
 }
 
 /* ------------------------------ PACKAGES ------------------------------ */
 
 const tiers = [
-  { rank: "00", name: "Free Trial", price: "Free", period: "7 days", tag: "Start free", features: ["1 Week Access", "1 star Picks", "No card required"], cta: "Start Free", featured: false },
-  { rank: "03", name: "Standard", price: "$99.99", period: "/ month", tag: "Most subscribed", features: ["1 Month Access", "1 to 4 star Picks", "Discord + alerts", "Whale plays preview"], cta: "Get Standard", featured: true },
-  { rank: "07", name: "Whale", price: "$999.99", period: "/ year", tag: "Ultimate access", features: ["1 Year Access", "Every star tier unlocked", "10 star Whale picks", "1:1 strategy call"], cta: "Become a Whale", featured: false },
+  { code: "TRIAL-00", name: "FREE TRIAL", price: "0.00", period: "7D", features: ["1 WEEK ACCESS", "1★ PICKS", "NO CARD"], cta: "INITIATE", featured: false },
+  { code: "STD-03", name: "STANDARD", price: "99.99", period: "MO", features: ["30D ACCESS", "1-4★ PICKS", "DISCORD + ALERTS", "WHALE PREVIEW"], cta: "DEPLOY", featured: true },
+  { code: "WHL-07", name: "WHALE", price: "999.99", period: "YR", features: ["365D ACCESS", "ALL TIERS", "10★ WHALE PICKS", "1:1 STRATEGY"], cta: "ESCALATE", featured: false },
 ];
 
-function Packages() {
+function PackagesStrip() {
   return (
-    <section className="container-x py-24 border-t border-white/10" id="packages">
+    <section className="container-x py-12">
       <ScrollReveal>
-        <div className="flex items-end justify-between gap-6 pb-8 border-b border-white/10">
-          <div>
-            <div className="kicker kicker-rule text-[#1E90FF]">Section 03 &middot; Subscribe</div>
-            <h2 className="mt-4 serif-display text-5xl md:text-7xl text-white">
-              Built for serious <span className="serif-italic text-[#1E90FF]">bettors</span>.
-            </h2>
-          </div>
-          <p className="hidden md:block serif-italic text-slate-400 max-w-xs text-right">
-            Try it free, run the season, or own the year.
-          </p>
-        </div>
-      </ScrollReveal>
-
-      <div className="mt-12 grid md:grid-cols-3 gap-px bg-white/10 border border-white/10">
-        {tiers.map((t, i) => (
-          <ScrollReveal key={t.name} delay={i * 80}>
-            <div className={`h-full p-8 flex flex-col bg-[#060818] ${t.featured ? "lg:scale-[1.02] relative z-10 ring-1 ring-[#1E90FF]/40" : ""}`}>
-              <div className="flex items-baseline justify-between mb-6">
-                <div className="section-no">No. {t.rank}</div>
-                <div className={`kicker ${t.featured ? "text-[#1E90FF]" : "text-slate-500"}`}>{t.tag}</div>
+        <div className="label-mono mb-3 text-cyan-300">// 04 SUBSCRIPTIONS</div>
+        <h2 className="font-mono-num text-white text-4xl md:text-5xl font-bold mb-8">ACCESS TIERS</h2>
+        <div className="grid md:grid-cols-3 gap-3">
+          {tiers.map((t) => (
+            <div key={t.code} className={`terminal-panel rounded-sm p-5 ${t.featured ? "ring-1 ring-[#1E90FF]/60 relative" : ""}`}>
+              {t.featured && (
+                <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1E90FF] to-transparent" />
+              )}
+              <div className="flex items-center justify-between mb-3">
+                <span className="label-mono">{t.code}</span>
+                {t.featured && <span className="chip-mono is-active"><Zap className="h-3 w-3" /> POPULAR</span>}
               </div>
-              <h3 className="serif-display text-4xl text-white">{t.name}</h3>
-              <div className="mt-5 flex items-baseline gap-2">
-                <span className={`serif-display text-5xl ${t.price === "Free" ? "text-[#1E90FF]" : "text-white"}`}>{t.price}</span>
-                <span className="kicker text-slate-500">{t.period}</span>
+              <div className="font-mono-num text-2xl text-white font-bold">{t.name}</div>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="font-mono-num text-5xl text-white font-bold">${t.price}</span>
+                <span className="label-mono">/ {t.period}</span>
               </div>
-              <div className="my-6 h-px bg-white/10" />
-              <ul className="space-y-3 flex-1">
+              <div className="my-5 h-px bg-white/10" />
+              <ul className="space-y-2 mb-6">
                 {t.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm text-slate-300">
-                    <span className="serif-italic text-[#1E90FF] mt-0.5">&mdash;</span>
-                    <span>{f}</span>
+                  <li key={f} className="font-mono-num text-[11px] text-slate-300 flex items-center gap-2">
+                    <span className="text-[#1E90FF]">▸</span> {f}
                   </li>
                 ))}
               </ul>
-              <Link to="/packages" className={`mt-8 ${t.featured ? "btn-primary" : "btn-secondary"} w-full`}>
-                {t.cta} <ArrowUpRight className="h-4 w-4" />
+              <Link to="/packages" className={`${t.featured ? "btn-primary" : "btn-secondary"} w-full !rounded-sm font-mono-num text-xs tracking-[0.18em]`}>
+                {t.cta}
               </Link>
             </div>
-          </ScrollReveal>
-        ))}
-      </div>
-
-      <ScrollReveal delay={200}>
-        <div className="mt-8 text-center">
-          <Link to="/packages" className="text-sm text-slate-400 editorial-link inline-flex items-center gap-2 group">
-            Compare all eight tiers
-            <ArrowUpRight className="h-3.5 w-3.5 text-[#1E90FF] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+          ))}
         </div>
       </ScrollReveal>
     </section>
   );
 }
 
-/* ----------------------------- FINAL CTA ----------------------------- */
+/* ------------------------------ FINAL ------------------------------ */
 
-function FinalCta() {
+function FinalBar() {
   return (
-    <section className="container-x py-28 border-t border-white/10">
+    <section className="container-x py-16">
       <ScrollReveal>
-        <div className="grid lg:grid-cols-12 gap-12 items-end">
-          <div className="lg:col-span-8">
-            <div className="kicker kicker-rule text-[#1E90FF] mb-6">Closing column</div>
-            <h2 className="serif-display text-6xl md:text-[110px] text-white">
-              Stop guessing.
-              <br />
-              <span className="serif-italic text-[#1E90FF]">Start grading</span>.
-            </h2>
-            <p className="mt-8 text-base text-slate-400 max-w-md leading-relaxed serif-italic">
-              Verified picks across every major sport, filed before the line moves. No hype, just receipts.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link to="/packages" className="btn-primary">
-                Become a Member <ArrowUpRight className="h-4 w-4" />
-              </Link>
-              <Link to="/picks" className="btn-secondary">
-                Browse free picks
-              </Link>
+        <div className="terminal-panel rounded-sm p-8 md:p-12 relative overflow-hidden">
+          <div className="absolute inset-0 scanline opacity-50 pointer-events-none" />
+          <div className="relative grid lg:grid-cols-[1fr_auto] gap-10 items-end">
+            <div>
+              <div className="label-mono text-cyan-300 mb-4">// EXECUTE</div>
+              <h2 className="font-mono-num text-white text-4xl md:text-6xl font-bold leading-[0.95]">
+                STOP GUESSING.<br />
+                <span className="text-[#1E90FF]">START GRADING.</span>
+              </h2>
+              <p className="mt-6 text-slate-400 max-w-lg">
+                Receipts beat hype. Every pick public, every grade audited, every unit accounted for.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link to="/packages" className="btn-primary">
+                  Open Account <ArrowUpRight className="h-4 w-4" />
+                </Link>
+                <Link to="/picks" className="btn-secondary">Free Board</Link>
+              </div>
             </div>
-            <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-xs text-slate-500">
-              <div className="flex items-center gap-2"><Trophy className="h-3.5 w-3.5 text-amber-300" /> 3-yr verified record</div>
-              <div className="flex items-center gap-2"><ShieldCheck className="h-3.5 w-3.5 text-emerald-400" /> Cancel anytime</div>
-              <div className="flex items-center gap-2"><Activity className="h-3.5 w-3.5 text-cyan-300" /> 6 sports covered</div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 lg:border-l lg:border-white/10 lg:pl-10">
-            <div className="space-y-8">
-              {[
-                { v: "67.4", s: "%", l: "30-day hit rate" },
-                { v: "+184", s: "u", l: "YTD profit" },
-                { v: "12.8", s: "%", l: "Return on investment" },
-              ].map((s) => (
-                <div key={s.l} className="flex items-baseline justify-between gap-4 pb-6 border-b border-white/10 last:border-0">
-                  <div className="kicker text-slate-500 flex-1">{s.l}</div>
-                  <div className="serif-display text-5xl text-white">
-                    {s.v}<span className="text-2xl text-slate-500 ml-0.5">{s.s}</span>
-                  </div>
-                </div>
-              ))}
+            <div className="grid grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-2 text-xs">
+              <Trust icon={<ShieldCheck className="h-4 w-4 text-emerald-300" />} label="3-YR VERIFIED RECORD" />
+              <Trust icon={<Activity className="h-4 w-4 text-cyan-300" />} label="6 LEAGUES COVERED" />
+              <Trust icon={<Lock className="h-4 w-4 text-[#1E90FF]" />} label="CANCEL ANYTIME" />
             </div>
           </div>
         </div>
       </ScrollReveal>
     </section>
+  );
+}
+
+function Trust({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <div className="flex items-center gap-2 px-3 py-2 border border-white/10 rounded-sm bg-white/[0.02]">
+      {icon}
+      <span className="label-mono text-slate-300">{label}</span>
+    </div>
   );
 }

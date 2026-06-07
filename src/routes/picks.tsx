@@ -1,15 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Lock, ChevronLeft, ChevronRight, ArrowUpRight, Target } from "lucide-react";
+import { Lock, ChevronLeft, ChevronRight, ArrowUpRight, TrendingUp, TrendingDown, Minus, Search } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { MatchupLogos, type League } from "@/components/TeamLogo";
 
 export const Route = createFileRoute("/picks")({
   head: () => ({
     meta: [
-      { title: "The Board | Today's Expert Picks" },
-      { name: "description", content: "Today's expert picks across the NBA, NFL, NHL, MLB, NCAAF, and NCAAB. Timestamped before lines move, graded after the final whistle." },
-      { property: "og:title", content: "The Board | Today's Expert Picks" },
+      { title: "Live Board | Today's Expert Picks" },
+      { name: "description", content: "Today's expert picks across NBA, NFL, NHL, MLB, NCAAF, NCAAB. Timestamped before lines move, graded after the whistle." },
+      { property: "og:title", content: "Live Board | Today's Expert Picks" },
       { property: "og:description", content: "Today's expert picks across all major leagues." },
     ],
   }),
@@ -28,21 +28,22 @@ type Pick = {
   locked: boolean;
   expert: string;
   whale?: boolean;
+  move: number;
 };
 
 const sports: ("ALL" | Pick["sport"])[] = ["ALL", "NFL", "NCAAF", "NBA", "NCAAB", "MLB", "NHL"];
 
 const picksData: Pick[] = [
-  { id: "p1", sport: "NBA", time: "3:00 PM", matchup: "Cavaliers vs Pistons", book: "DraftKings", units: 2, confidence: 82, locked: true, expert: "M. Davis" },
-  { id: "p2", sport: "MLB", time: "4:05 PM", matchup: "Orioles vs Athletics", book: "FanDuel", units: 3, confidence: 86, locked: true, expert: "M. Rinner" },
-  { id: "p3", sport: "MLB", time: "6:05 PM", matchup: "Phillies vs Rockies", book: "BetMGM", units: 5, confidence: 89, locked: true, expert: "M. Rinner", whale: true },
-  { id: "p4", sport: "MLB", time: "6:10 PM", matchup: "Reds vs Astros", book: "DraftKings", units: 3, confidence: 85, pick: "Astros ML -125", locked: false, expert: "D. Wilson" },
-  { id: "p5", sport: "MLB", time: "6:40 PM", matchup: "Phillies vs Rockies", book: "FanDuel", units: 1, confidence: 56, locked: true, expert: "M. Rinner" },
-  { id: "p6", sport: "MLB", time: "7:05 PM", matchup: "Orioles vs Athletics", book: "BetMGM", units: 5, confidence: 92, locked: true, expert: "M. Rinner", whale: true },
-  { id: "p7", sport: "NFL", time: "8:20 PM", matchup: "Eagles vs Cowboys", book: "DraftKings", units: 3, confidence: 88, locked: true, expert: "M. Davis" },
-  { id: "p8", sport: "NHL", time: "7:00 PM", matchup: "Bruins vs Rangers", book: "FanDuel", units: 2, confidence: 70, pick: "Rangers PL +1.5", locked: false, expert: "D. Wilson" },
-  { id: "p9", sport: "NBA", time: "7:00 PM", matchup: "Pistons vs Cavaliers", book: "BetMGM", units: 1, confidence: 64, locked: true, expert: "D. Wilson" },
-  { id: "p10", sport: "NCAAB", time: "6:00 PM", matchup: "UNC vs Duke", book: "DraftKings", units: 2, confidence: 77, locked: true, expert: "M. Davis" },
+  { id: "p1", sport: "NBA", time: "15:00", matchup: "Cavaliers vs Pistons", book: "DK", units: 2, confidence: 82, locked: true, expert: "M.DAVIS", move: +4 },
+  { id: "p2", sport: "MLB", time: "16:05", matchup: "Orioles vs Athletics", book: "FD", units: 3, confidence: 86, locked: true, expert: "M.RINNER", move: -2 },
+  { id: "p3", sport: "MLB", time: "18:05", matchup: "Phillies vs Rockies", book: "MGM", units: 5, confidence: 89, locked: true, expert: "M.RINNER", whale: true, move: +8 },
+  { id: "p4", sport: "MLB", time: "18:10", matchup: "Reds vs Astros", book: "DK", units: 3, confidence: 85, pick: "HOU ML -125", locked: false, expert: "D.WILSON", move: +3 },
+  { id: "p5", sport: "MLB", time: "18:40", matchup: "Phillies vs Rockies", book: "FD", units: 1, confidence: 56, locked: true, expert: "M.RINNER", move: 0 },
+  { id: "p6", sport: "MLB", time: "19:05", matchup: "Orioles vs Athletics", book: "MGM", units: 5, confidence: 92, locked: true, expert: "M.RINNER", whale: true, move: +12 },
+  { id: "p7", sport: "NFL", time: "20:20", matchup: "Eagles vs Cowboys", book: "DK", units: 3, confidence: 88, locked: true, expert: "M.DAVIS", move: -5 },
+  { id: "p8", sport: "NHL", time: "19:00", matchup: "Bruins vs Rangers", book: "FD", units: 2, confidence: 70, pick: "NYR PL +1.5", locked: false, expert: "D.WILSON", move: +6 },
+  { id: "p9", sport: "NBA", time: "19:00", matchup: "Pistons vs Cavaliers", book: "MGM", units: 1, confidence: 64, locked: true, expert: "D.WILSON", move: -1 },
+  { id: "p10", sport: "NCAAB", time: "18:00", matchup: "UNC vs Duke", book: "DK", units: 2, confidence: 77, locked: true, expert: "M.DAVIS", move: +4 },
 ];
 
 function PicksPage() {
@@ -57,207 +58,182 @@ function PicksPage() {
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
   const pageItems = filtered.slice((page - 1) * perPage, page * perPage);
 
-  const today = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+  const date = new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }).toUpperCase();
+  const now = new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
+
+  const avgConf = Math.round(filtered.reduce((s, p) => s + p.confidence, 0) / Math.max(1, filtered.length));
+  const totalUnits = filtered.reduce((s, p) => s + p.units, 0);
 
   return (
-    <div className="container-x py-12">
-      {/* Masthead */}
-      <ScrollReveal>
-        <div className="rule-double">
-          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.28em] font-bold text-slate-500 py-2">
-            <span>The Board &middot; Daily</span>
-            <span className="hidden sm:block serif-italic normal-case tracking-normal text-slate-400 text-base">Today&apos;s Card</span>
-            <span>{today}</span>
-          </div>
-        </div>
-
-        <div className="mt-10 grid lg:grid-cols-[1fr_auto] gap-8 items-end pb-10 border-b border-white/10">
-          <div>
-            <div className="kicker kicker-rule text-emerald-300">
-              <span className="relative inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 ping-soft relative" />
-                Live slate
-              </span>
+    <div className="terminal-grid min-h-screen">
+      <div className="container-x py-8">
+        {/* Command bar */}
+        <ScrollReveal>
+          <div className="terminal-panel rounded-sm">
+            <div className="terminal-panel-header">
+              <div className="flex items-center gap-3">
+                <span className="led-dot bg-emerald-400 text-emerald-400 live-blink" />
+                <span className="text-white">BOARD / LIVE</span>
+                <span className="text-slate-600">SESSION {date} · {now} ET</span>
+              </div>
+              <span className="text-slate-600">DELAYED 15S</span>
             </div>
-            <h1 className="mt-5 serif-display text-6xl md:text-8xl text-white">
-              The <span className="serif-italic text-[#1E90FF]">Board</span>.
+            <div className="grid md:grid-cols-4 divide-x divide-white/5">
+              <Cell label="ON THE CARD" value={filtered.length.toString().padStart(2, "0")} />
+              <Cell label="AVG CONFIDENCE" value={`${avgConf}`} suffix="%" />
+              <Cell label="TOTAL UNITS" value={totalUnits.toFixed(1)} accent="emerald" />
+              <Cell label="30D HIT" value="67.4" suffix="%" accent="cyan" />
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Title */}
+        <ScrollReveal delay={60}>
+          <div className="mt-10 mb-6">
+            <div className="label-mono text-cyan-300 mb-2">// TODAYS BOARD</div>
+            <h1 className="font-mono-num text-white text-5xl md:text-7xl font-bold leading-[0.95]">
+              LIVE <span className="text-[#1E90FF]">BOARD.</span>
             </h1>
-            <p className="mt-5 text-base text-slate-400 max-w-lg leading-relaxed drop-cap">
-              Every play, timestamped before the line moves and graded after the final whistle. Read across, then decide.
+            <p className="mt-4 text-slate-400 max-w-xl">
+              Every play timestamped before the line moves, graded after the whistle. Read across, then decide.
             </p>
           </div>
+        </ScrollReveal>
 
-          <div className="grid grid-cols-3 gap-8 text-right lg:text-left">
-            {[
-              { v: filtered.length.toString().padStart(2, "0"), l: "On the card" },
-              { v: "67.4%", l: "30-day hit" },
-              { v: "+184u", l: "YTD profit" },
-            ].map((s) => (
-              <div key={s.l}>
-                <div className="serif-display text-4xl text-white">{s.v}</div>
-                <div className="kicker mt-1 text-slate-500">{s.l}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* Section filter */}
-      <ScrollReveal delay={60}>
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <span className="kicker text-slate-500">Leagues</span>
-            {sports.map((s) => {
-              const active = activeSport === s;
-              return (
+        {/* Filter */}
+        <ScrollReveal delay={80}>
+          <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-white/10">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="label-mono mr-2">FILTER /</span>
+              {sports.map((s) => (
                 <button
                   key={s}
                   onClick={() => { setActiveSport(s); setPage(1); }}
-                  className={`text-sm font-semibold tracking-wide editorial-link ${
-                    active ? "text-white" : "text-slate-500 hover:text-white"
-                  }`}
-                  style={active ? { backgroundSize: "100% 1px" } : {}}
+                  className={`chip-mono ${activeSport === s ? "is-active" : ""}`}
                 >
-                  {s === "ALL" ? "All" : s}
+                  {s === "ALL" ? "ALL" : s}
                 </button>
-              );
-            })}
+              ))}
+            </div>
+            <div className="flex items-center gap-2 label-mono">
+              <Search className="h-3.5 w-3.5 text-slate-500" />
+              MEMBERS UNLOCK FULL FEED
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-[11px] text-slate-500 serif-italic">
-            <Lock className="h-3 w-3" /> Member picks unlock on subscribe.
+        </ScrollReveal>
+
+        {/* Board table */}
+        <div className="mt-6 terminal-panel rounded-sm overflow-x-auto">
+          <div className="grid grid-cols-[40px_60px_60px_60px_1fr_140px_180px_60px_60px_90px] gap-3 px-4 py-3 border-b border-white/10 label-mono min-w-[1080px]">
+            <span>#</span><span>LG</span><span>TIME</span><span>BOOK</span>
+            <span>MATCHUP</span><span>SELECTION</span><span>CONFIDENCE</span>
+            <span className="text-right">UNITS</span><span className="text-right">MV</span>
+            <span className="text-right">EXPERT</span>
           </div>
+
+          {pageItems.map((p, i) => {
+            const num = (page - 1) * perPage + i + 1;
+            const [a, b] = p.matchup.split(" vs ");
+            const MoveIcon = p.move > 0 ? TrendingUp : p.move < 0 ? TrendingDown : Minus;
+            const moveColor = p.move > 0 ? "tape-up" : p.move < 0 ? "tape-down" : "tape-flat";
+            return (
+              <div key={p.id} className="terminal-row grid grid-cols-[40px_60px_60px_60px_1fr_140px_180px_60px_60px_90px] gap-3 px-4 py-4 items-center min-w-[1080px]">
+                <span className="font-mono-num text-[11px] text-slate-600">{String(num).padStart(2, "0")}</span>
+                <span className="font-mono-num text-[11px] text-[#1E90FF] font-bold">{p.sport}</span>
+                <span className="font-mono-num text-[11px] text-slate-400">{p.time}</span>
+                <span className="font-mono-num text-[10px] text-slate-500">{p.book}</span>
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <MatchupLogos league={p.sport as League} a={a} b={b} size={20} />
+                  <span className="font-mono-num text-[13px] text-white font-semibold truncate">
+                    {a} <span className="text-slate-600">@</span> {b}
+                  </span>
+                  {p.whale && (
+                    <span className="chip-mono !py-0.5 !px-1.5 !text-[9px] border-amber-400/40 bg-amber-400/10 text-amber-300">WHALE</span>
+                  )}
+                </div>
+                <div className="font-mono-num text-[11px]">
+                  {p.locked ? (
+                    <span className="text-slate-600 inline-flex items-center gap-1.5"><Lock className="h-3 w-3" /> ████████</span>
+                  ) : (
+                    <span className="text-cyan-300 font-bold">{p.pick}</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="bar-track flex-1">
+                    <div className="bar-fill" style={{ width: `${p.confidence}%` }} />
+                  </div>
+                  <span className="font-mono-num text-[11px] text-white font-bold w-7 text-right">{p.confidence}</span>
+                </div>
+                <span className="font-mono-num text-sm text-white font-bold text-right">{p.units}.0</span>
+                <span className={`font-mono-num text-[11px] text-right inline-flex items-center justify-end gap-1 ${moveColor}`}>
+                  <MoveIcon className="h-3 w-3" />
+                  {p.move > 0 ? `+${p.move}` : p.move}
+                </span>
+                <span className="font-mono-num text-[10px] text-slate-400 text-right tracking-wider">{p.expert}</span>
+              </div>
+            );
+          })}
+
+          {filtered.length === 0 && (
+            <div className="py-16 text-center label-mono">NO ROWS / SELECT A LEAGUE</div>
+          )}
         </div>
-      </ScrollReveal>
 
-      {/* Editorial list */}
-      <div className="mt-10 divide-y divide-white/10">
-        {pageItems.map((p, i) => {
-          const num = (page - 1) * perPage + i + 1;
-          const [a, b] = p.matchup.split(" vs ");
-          return (
-            <ScrollReveal key={p.id} delay={i * 40}>
-              <article className="grid grid-cols-12 gap-4 md:gap-8 py-7 group hover:bg-white/[0.015] transition-colors -mx-4 px-4">
-                {/* Number + league */}
-                <div className="col-span-2 md:col-span-1">
-                  <div className="section-no">No. {String(num).padStart(2, "0")}</div>
-                  <div className="kicker text-[#1E90FF] mt-1">{p.sport}</div>
-                </div>
-
-                {/* Matchup + headline */}
-                <div className="col-span-10 md:col-span-6 min-w-0">
-                  <div className="flex items-center gap-2 mb-2 text-[10px] uppercase tracking-[0.22em] font-bold text-slate-500">
-                    <span className="font-mono">{p.time}</span>
-                    <span>&middot;</span>
-                    <span>{p.book}</span>
-                    {p.whale && (
-                      <span className="ml-1 px-1.5 py-0.5 rounded-sm bg-amber-400/10 border border-amber-400/40 text-amber-300 text-[9px] font-black tracking-widest">
-                        WHALE
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MatchupLogos league={p.sport as League} a={a} b={b} size={28} />
-                    <h3 className="serif-display text-2xl md:text-3xl text-white group-hover:text-[#1E90FF] transition-colors">
-                      {a} <span className="serif-italic text-slate-500">vs</span> {b}
-                    </h3>
-                  </div>
-                  <div className="mt-3 flex items-center gap-2 text-sm">
-                    {p.locked ? (
-                      <span className="text-slate-500 serif-italic flex items-center gap-1.5">
-                        <Lock className="h-3 w-3" /> Selection reserved for members.
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-1.5 text-slate-200 font-mono">
-                        <Target className="h-3.5 w-3.5 text-[#1E90FF]" /> {p.pick}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Confidence bar */}
-                <div className="hidden md:block md:col-span-3">
-                  <div className="kicker text-slate-500 mb-2">Confidence</div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1 h-px bg-white/10 relative overflow-hidden">
-                      <div className="absolute inset-y-0 left-0 h-full bg-[#1E90FF]" style={{ width: `${p.confidence}%`, height: "1px", top: "50%", marginTop: "-0.5px" }} />
-                      <div className="absolute h-2 w-2 rounded-full bg-[#1E90FF] -mt-[3px]" style={{ left: `calc(${p.confidence}% - 4px)`, top: "50%" }} />
-                    </div>
-                    <span className="font-mono text-sm font-bold text-white tabular-nums">{p.confidence}</span>
-                  </div>
-                </div>
-
-                {/* Units + byline */}
-                <div className="col-span-12 md:col-span-2 flex md:flex-col items-center md:items-end justify-between md:justify-start gap-2 md:text-right">
-                  <div>
-                    <div className="kicker text-slate-500">Units</div>
-                    <div className="serif-display text-3xl text-white mt-1">{p.units}</div>
-                  </div>
-                  <div className="text-[11px] uppercase tracking-[0.2em] text-slate-500 font-bold">
-                    <span className="text-slate-300">{p.expert}</span>
-                  </div>
-                </div>
-              </article>
-            </ScrollReveal>
-          );
-        })}
-
-        {filtered.length === 0 && (
-          <div className="py-20 text-center text-slate-500 serif-italic text-lg">
-            Nothing on the card in this league yet.
+        {/* Footer */}
+        {filtered.length > 0 && (
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 py-4 border-t border-white/10">
+            <Link to="/packages" className="group inline-flex items-center gap-2 label-mono">
+              <span className="text-[#1E90FF]">▸ MEMBERS</span>
+              <span className="text-slate-300">UNLOCK EVERY SELECTION</span>
+              <ArrowUpRight className="h-3.5 w-3.5 text-[#1E90FF] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+            <div className="flex items-center gap-1">
+              <PageBtn disabled={page === 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
+                <ChevronLeft className="h-3.5 w-3.5" />
+              </PageBtn>
+              {Array.from({ length: totalPages }).map((_, i) => {
+                const n = i + 1;
+                const active = n === page;
+                return (
+                  <button
+                    key={n}
+                    onClick={() => setPage(n)}
+                    className={`chip-mono !min-w-[36px] justify-center ${active ? "is-active" : ""}`}
+                  >
+                    {String(n).padStart(2, "0")}
+                  </button>
+                );
+              })}
+              <PageBtn disabled={page === totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>
+                <ChevronRight className="h-3.5 w-3.5" />
+              </PageBtn>
+            </div>
           </div>
         )}
       </div>
-
-      {/* Pagination + members CTA */}
-      {filtered.length > 0 && (
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-between gap-6">
-          <Link to="/packages" className="group inline-flex items-center gap-2 text-sm">
-            <span className="kicker text-[#1E90FF]">Members</span>
-            <span className="text-slate-300 editorial-link">
-              Unlock every selection on the board
-            </span>
-            <ArrowUpRight className="h-3.5 w-3.5 text-[#1E90FF] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
-          <div className="flex items-center gap-1.5">
-            <PageBtn disabled={page === 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
-              <ChevronLeft className="h-3.5 w-3.5" />
-            </PageBtn>
-            {Array.from({ length: totalPages }).map((_, i) => {
-              const n = i + 1;
-              const active = n === page;
-              return (
-                <button
-                  key={n}
-                  onClick={() => setPage(n)}
-                  className={`h-9 w-9 text-xs font-mono tabular-nums transition border-b ${
-                    active
-                      ? "text-white border-[#1E90FF] font-bold"
-                      : "text-slate-500 border-transparent hover:text-white hover:border-white/30"
-                  }`}
-                >
-                  {String(n).padStart(2, "0")}
-                </button>
-              );
-            })}
-            <PageBtn disabled={page === totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>
-              <ChevronRight className="h-3.5 w-3.5" />
-            </PageBtn>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
-function PageBtn({
-  children, onClick, disabled,
-}: { children: React.ReactNode; onClick: () => void; disabled?: boolean }) {
+function Cell({ label, value, suffix, accent }: { label: string; value: string; suffix?: string; accent?: "emerald" | "cyan" }) {
+  const c = accent === "emerald" ? "text-emerald-300" : accent === "cyan" ? "text-cyan-300" : "text-white";
+  return (
+    <div className="p-4">
+      <div className="label-mono mb-1.5">{label}</div>
+      <div className={`font-mono-num text-2xl font-bold ${c}`}>
+        {value}<span className="text-slate-500 text-base ml-0.5">{suffix}</span>
+      </div>
+    </div>
+  );
+}
+
+function PageBtn({ children, onClick, disabled }: { children: React.ReactNode; onClick: () => void; disabled?: boolean }) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`h-9 w-9 flex items-center justify-center transition ${
-        disabled ? "text-slate-700 cursor-not-allowed" : "text-slate-400 hover:text-white"
+      className={`h-9 w-9 flex items-center justify-center border border-white/10 rounded-sm transition ${
+        disabled ? "text-slate-700 cursor-not-allowed" : "text-slate-400 hover:text-white hover:border-white/30"
       }`}
     >
       {children}
